@@ -77,6 +77,8 @@ header h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .github-link {
@@ -350,6 +352,7 @@ header h1 {
   padding: 1rem 1.5rem;
   background: var(--code-bg);
   border-bottom: 2px solid var(--code-border);
+  gap: 1rem;
 }
 
 .code-header h4 {
@@ -402,6 +405,7 @@ header h1 {
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .reset-button {
@@ -512,6 +516,7 @@ header h1 {
   height: 500px;
   overflow: hidden;
   min-height: 500px;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .code-block-light {
@@ -534,6 +539,9 @@ header h1 {
   margin: 0;
   height: 100%;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  word-break: break-word; /* Prevent horizontal overflow */
+  overflow-wrap: break-word;
 }
 
 .code-block-light .code-content {
@@ -560,6 +568,9 @@ header h1 {
   -moz-tab-size: 2;
   white-space: pre;
   overflow: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  word-break: break-word; /* Prevent horizontal overflow */
+  overflow-wrap: break-word;
 }
 
 .code-block-light .code-editor {
@@ -755,13 +766,24 @@ header h1 {
   text-decoration: underline;
 }
 
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .container {
-    padding: 2rem 1.25rem;
+    padding: 1.5rem 1rem;
+  }
+
+  header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
   }
 
   header h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
   }
 
   .header-top {
@@ -772,18 +794,298 @@ header h1 {
 
   .github-link {
     align-self: flex-start;
+    padding: 0.625rem 1rem;
+    min-height: 44px; /* Better touch target */
+    font-size: 0.875rem;
+  }
+
+  .lessons-nav {
+    gap: 1rem;
+  }
+
+  .lesson-card {
+    padding: 1.25rem;
+    gap: 1rem;
+    min-height: 44px; /* Better touch target */
+  }
+
+  .lesson-number {
+    min-width: 2.5rem;
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .lesson-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .lesson-card p {
+    font-size: 0.875rem;
+  }
+
+  .fixed-back-button {
+    top: 1rem;
+    left: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 44px;
+    min-height: 44px; /* Better touch target */
+  }
+
+  .fixed-back-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lesson-header {
+    margin-bottom: 2rem;
+  }
+
+  .lesson-header h2 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  .lesson-header .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .lesson-header .description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .concept-section {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .concept-section h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .concept-section p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .concept-section li {
+    font-size: 0.95rem;
+    padding: 0.625rem 0;
+    padding-left: 1.5rem;
   }
 
   .code-examples {
-    gap: 2rem;
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
 
-  .code-content {
+  .code-header {
+    padding: 0.875rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .language-tabs {
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  .language-tab {
+    padding: 0.625rem 0.875rem;
     font-size: 0.8rem;
-    padding: 1.25rem;
+    min-height: 44px; /* Better touch target */
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .reset-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    min-height: 44px; /* Better touch target */
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .run-button,
+  .compile-button,
+  .compile-run-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    min-height: 44px; /* Better touch target */
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .code-block {
+    height: 400px;
+    min-height: 400px;
+  }
+
+  .code-content,
+  .code-editor {
+    font-size: 0.8rem;
+    padding: 1rem;
+    line-height: 1.6;
+  }
+
+  .output {
+    padding: 1rem;
+    font-size: 0.8rem;
+    min-height: 3rem;
+  }
+
+  .output-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .output-content {
+    width: 100%;
+  }
+
+  .theme-toggle {
+    padding: 0.625rem 0.875rem;
+    font-size: 1.1rem;
+    min-height: 44px;
+    min-width: 44px; /* Better touch target */
+    align-self: flex-end;
   }
 
   .app-footer {
-    padding: 1rem 1.25rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.7rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 1.25rem 0.875rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  .lesson-card {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .lesson-number {
+    align-self: flex-start;
+  }
+
+  .lesson-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .concept-section {
+    padding: 1.25rem;
+  }
+
+  .code-header {
+    padding: 0.75rem;
+  }
+
+  .language-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .code-block {
+    height: 350px;
+    min-height: 350px;
+  }
+
+  .code-content,
+  .code-editor {
+    font-size: 0.75rem;
+    padding: 0.875rem;
+  }
+
+  .run-button,
+  .compile-button,
+  .compile-run-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    min-width: 100px;
+  }
+
+  .fixed-back-button {
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .code-block {
+    height: 300px;
+    min-height: 300px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .lesson-card:hover {
+    transform: none;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  .lesson-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+
+  .run-button:hover:not(:disabled),
+  .compile-button:hover:not(:disabled),
+  .compile-run-button:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .run-button:active:not(:disabled),
+  .compile-button:active:not(:disabled),
+  .compile-run-button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .fixed-back-button:hover {
+    transform: none;
+  }
+
+  .fixed-back-button:active {
+    transform: scale(0.95);
   }
 }
