@@ -8,7 +8,7 @@ const DANGEROUS_PATTERNS = [
   /eval\(/,
   /exec\(/,
   /open\(/,
-  /file\(/,
+  /\bfile\(/,
   /input\(/,
   /raw_input\(/,
   /system\(/,
@@ -39,9 +39,19 @@ export function sanitizeCode(code: string, language: 'python' | 'cpp'): string {
 }
 
 function sanitizePythonCode(code: string): string {
-  // Check for dangerous patterns
+  // Remove comments and strings to avoid false positives
+  // This is a simple approach - remove single-line comments
+  const codeWithoutComments = code
+    .split('\n')
+    .map(line => {
+      const commentIndex = line.indexOf('#');
+      return commentIndex >= 0 ? line.substring(0, commentIndex) : line;
+    })
+    .join('\n');
+
+  // Check for dangerous patterns in code (excluding comments)
   for (const pattern of DANGEROUS_PATTERNS) {
-    if (pattern.test(code)) {
+    if (pattern.test(codeWithoutComments)) {
       // Allow specific safe patterns - if importing os, only allow if using safe methods
       if (pattern.source.includes('import\\s+os')) {
         const usesSafeOsMethods = 
@@ -60,8 +70,8 @@ function sanitizePythonCode(code: string): string {
     }
   }
 
-  // Additional checks for file operations
-  if (code.includes('open(') && !code.includes('os.path.exists')) {
+  // Additional checks for file operations (check in code without comments)
+  if (codeWithoutComments.includes('open(') && !codeWithoutComments.includes('os.path.exists')) {
     throw new SecurityError('File operations must be preceded by existence checks');
   }
 

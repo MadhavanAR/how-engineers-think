@@ -15,4 +15,4 @@ Owning the mistake and offering recovery options does.
 - CI/CD pipelines
 - backend services
 
-Source: The Pragmatic Programmer (Chapter 1)
+Source: The Pragmatic Programmer 
