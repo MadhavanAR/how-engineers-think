@@ -3,6 +3,10 @@ import { getLessonById } from '@/lib/lessons';
 import { ApiResponse } from '@/lib/utils/api-response';
 import { NotFoundError } from '@/lib/utils/errors';
 
+// Force dynamic rendering - don't statically generate this route
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: { id: string } }

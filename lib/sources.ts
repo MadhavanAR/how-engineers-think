@@ -8,9 +8,9 @@ interface CacheEntry<T> {
   timestamp: number;
 }
 
-// In development, disable cache completely for instant updates
-// In production, use a short TTL to balance performance and freshness
-// Force cache to be disabled for now to ensure all lessons show up
+// Disable cache completely to ensure fresh data in production
+// This is important because file system access in serverless environments
+// might have different behavior, and we want to always reload from files
 const CACHE_TTL = 0; // Disabled - always reload from files
 
 let cachedSources: CacheEntry<Source[]> | null = null;

@@ -156,24 +156,35 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
  */
 // Helper function to find the sources directory
 async function findSourcesDir(): Promise<string | null> {
+  // In production (serverless), process.cwd() might be different
+  // Try multiple paths to find the sources directory
   const possiblePaths = [
-    join(process.cwd(), 'sources'),
-    join(process.cwd(), '..', 'sources'),
-    join(__dirname, '..', 'sources'),
-    join(__dirname, '..', '..', 'sources'),
+    join(process.cwd(), 'sources'),           // Standard location
+    join(process.cwd(), '..', 'sources'),     // If running from .next/server
+    join(process.cwd(), '../..', 'sources'),  // If running from .next/server/app
+    join(__dirname, '..', 'sources'),         // Relative to compiled file
+    join(__dirname, '..', '..', 'sources'),  // Alternative relative path
   ];
+  
+  console.log(`Looking for sources directory. Current working directory: ${process.cwd()}`);
+  console.log(`__dirname: ${__dirname}`);
   
   for (const path of possiblePaths) {
     try {
       await fs.access(path);
-      console.log(`Found sources directory at: ${path}`);
-      return path;
-    } catch {
+      const stats = await fs.stat(path);
+      if (stats.isDirectory()) {
+        console.log(`✓ Found sources directory at: ${path}`);
+        return path;
+      }
+    } catch (error) {
       // Continue to next path
+      console.log(`✗ Path not accessible: ${path}`);
     }
   }
   
-  console.error(`Sources directory not found. Tried paths:`, possiblePaths);
+  console.error(`❌ Sources directory not found. Tried paths:`, possiblePaths);
+  console.error(`Current working directory: ${process.cwd()}`);
   return null;
 }
 

@@ -1129,52 +1129,70 @@ header h1 {
   }
 
   .lesson-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    padding-right: 0; /* Remove extra padding */
   }
 
   .lesson-header h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     line-height: 1.3;
+    margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .lesson-header .subtitle {
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
   }
 
   .lesson-header .description {
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 0.9rem;
+    line-height: 1.7;
   }
 
   .concept-section {
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    /* Add left padding to prevent overlap with back button */
-    padding-left: calc(1.5rem + 3.5rem); /* 1.5rem base + space for back button */
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    /* Reduce left padding on mobile - back button is smaller */
+    padding-left: 1.25rem; /* Normal padding, back button won't overlap due to container padding */
   }
 
   .concept-section h3 {
-    font-size: 0.8rem;
-    margin-bottom: 0.875rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
   }
 
   .concept-section p {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .concept-section ul {
+    margin-top: 0.75rem;
   }
 
   .concept-section li {
-    font-size: 0.95rem;
-    padding: 0.75rem 0;
-    padding-left: 1.5rem;
-    line-height: 1.75;
+    font-size: 0.875rem;
+    padding: 0.625rem 0;
+    padding-left: 1.25rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .code-examples {
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  
+  .code-example {
+    border-radius: 8px;
   }
 
   .code-header {
@@ -1229,15 +1247,26 @@ header h1 {
   }
 
   .code-block {
-    height: 400px;
-    min-height: 400px;
+    height: 300px;
+    min-height: 300px;
+    max-height: 400px;
   }
 
   .code-content,
   .code-editor {
-    font-size: 0.85rem;
-    padding: 1.25rem;
-    line-height: 1.7;
+    font-size: 0.8rem;
+    padding: 1rem;
+    line-height: 1.6;
+  }
+  
+  .output {
+    padding: 1rem;
+    font-size: 0.8rem;
+    min-height: 3rem;
+  }
+  
+  .output-header {
+    padding: 0.875rem 1rem;
   }
 
   .output {
@@ -1358,58 +1387,102 @@ header h1 {
     align-self: flex-start;
   }
 
+  .lesson-header {
+    margin-bottom: 1.25rem;
+  }
+
   .lesson-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  
+  .lesson-header .subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 0.625rem;
   }
 
   .concept-section {
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-    /* Add left padding to prevent overlap with back button */
-    padding-left: calc(1.25rem + 3.25rem); /* 1.25rem base + space for back button */
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+    padding-left: 1rem; /* Normal padding */
+  }
+  
+  .concept-section h3 {
+    font-size: 0.7rem;
+    margin-bottom: 0.625rem;
   }
 
   .concept-section p {
-    font-size: 0.9rem;
-    line-height: 1.8;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
   }
 
   .concept-section li {
-    font-size: 0.9rem;
-    line-height: 1.75;
-    padding: 0.625rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    padding: 0.5rem 0;
+    padding-left: 1rem;
   }
 
   .code-header {
-    padding: 0.75rem;
+    padding: 0.625rem 0.75rem;
     flex-wrap: nowrap; /* Keep tabs and buttons on same line */
     overflow-x: auto; /* Allow horizontal scroll if needed */
+    gap: 0.5rem;
   }
   
   .language-tabs {
     flex-shrink: 0;
+    gap: 0.25rem;
   }
   
   .header-actions {
     flex-shrink: 0;
     margin-left: auto;
+    gap: 0.375rem;
   }
 
   .language-tab {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.5rem 0.625rem;
+    font-size: 0.7rem;
+    min-height: 40px;
+  }
+  
+  .action-buttons {
+    gap: 0.375rem;
   }
 
   .code-block {
-    height: 350px;
-    min-height: 350px;
+    height: 280px;
+    min-height: 280px;
+    max-height: 350px;
   }
 
   .code-content,
   .code-editor {
-    font-size: 0.8rem;
-    padding: 1rem;
-    line-height: 1.7;
+    font-size: 0.75rem;
+    padding: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  .output {
+    padding: 0.875rem;
+    font-size: 0.75rem;
+    min-height: 2.5rem;
+  }
+  
+  .output-header {
+    padding: 0.75rem 0.875rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .theme-toggle {
+    align-self: flex-end;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
   }
 
   .run-button,
