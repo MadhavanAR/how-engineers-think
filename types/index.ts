@@ -14,8 +14,17 @@ export interface CodeExecutionResponse {
   compiled?: boolean;
 }
 
+export interface Source {
+  id: string;
+  name: string;
+  description?: string;
+  source?: string; // e.g., "Google", "Senior Engineer", "Team Lead", "Book: Pragmatic Programmer"
+  lessons: Lesson[];
+}
+
 export interface Lesson {
   id: string;
+  sourceId: string;
   title: string;
   subtitle: string;
   description: string;

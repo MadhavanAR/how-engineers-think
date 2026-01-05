@@ -1,26 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getLessonById } from '@/lib/lessons';
+import { ApiResponse } from '@/lib/utils/api-response';
+import { NotFoundError } from '@/lib/utils/errors';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const lesson = getLessonById(params.id);
+    const lesson = await getLessonById(params.id);
 
     if (!lesson) {
-      return NextResponse.json(
-        { error: 'Lesson not found' },
-        { status: 404 }
-      );
+      return ApiResponse.notFound('Lesson not found');
     }
 
-    return NextResponse.json(lesson, { status: 200 });
+    return ApiResponse.success(lesson);
   } catch (error) {
     console.error('Error fetching lesson:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch lesson' },
-      { status: 500 }
-    );
+    
+    if (error instanceof NotFoundError) {
+      return ApiResponse.notFound(error.message);
+    }
+
+    return ApiResponse.internalError('Failed to fetch lesson');
   }
 }

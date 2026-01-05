@@ -1,4 +1,4 @@
-import { EXECUTION_CONFIG } from './constants';
+import { SecurityError } from './utils/errors';
 
 const DANGEROUS_PATTERNS = [
   /import\s+os\s*$/m,
@@ -16,20 +16,7 @@ const DANGEROUS_PATTERNS = [
   /spawn\(/,
   /fork\(/,
   /execve\(/,
-];
-
-const ALLOWED_IMPORTS = [
-  'os.path.exists',
-  'os.path.isfile',
-  'os.path.isdir',
-];
-
-export class SecurityError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'SecurityError';
-  }
-}
+] as const;
 
 export function sanitizeCode(code: string, language: 'python' | 'cpp'): string {
   if (language === 'python') {

@@ -1,12 +1,6 @@
 import { CodeExecutionRequest } from '@/types';
 import { EXECUTION_CONFIG, SUPPORTED_LANGUAGES } from './constants';
-
-export class ValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ValidationError';
-  }
-}
+import { ValidationError } from './utils/errors';
 
 export function validateExecutionRequest(
   request: CodeExecutionRequest

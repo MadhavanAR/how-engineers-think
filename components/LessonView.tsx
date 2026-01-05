@@ -34,7 +34,7 @@ export default function LessonView({ lesson, onBack }: LessonViewProps) {
       </div>
 
       <div className="concept-section">
-        <h3>Where you'll see this in real projects</h3>
+        <h3>Where you&apos;ll see this in real projects</h3>
         <ul>
           {lesson.applications.map((app, index) => (
             <li key={index}>{app}</li>
