@@ -1,22 +1,51 @@
 import { Source, Lesson } from '@/types';
 import { loadSourcesFromFiles, loadAllLessonsFromFiles } from './sources-loader';
 
-// Cache for loaded sources and lessons
-let cachedSources: Source[] | null = null;
-let cachedLessons: Lesson[] | null = null;
+// Cache for loaded sources and lessons with TTL (Time To Live)
+// This ensures content updates are reflected in production
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+let cachedSources: CacheEntry<Source[]> | null = null;
+let cachedLessons: CacheEntry<Lesson[]> | null = null;
+
+/**
+ * Check if cache is still valid
+ */
+function isCacheValid<T>(cache: CacheEntry<T> | null): boolean {
+  if (!cache) return false;
+  const now = Date.now();
+  return (now - cache.timestamp) < CACHE_TTL;
+}
+
+/**
+ * Clear the cache (useful for development or manual refresh)
+ */
+export function clearCache(): void {
+  cachedSources = null;
+  cachedLessons = null;
+}
 
 /**
  * Get all sources with their lessons
  */
 export async function getAllSources(): Promise<Source[]> {
-  if (cachedSources) {
-    return cachedSources;
+  // Check if cache is still valid
+  if (isCacheValid(cachedSources)) {
+    return cachedSources!.data;
   }
   
   const fileSources = await loadSourcesFromFiles();
   
   if (fileSources.length > 0) {
-    cachedSources = fileSources;
+    cachedSources = {
+      data: fileSources,
+      timestamp: Date.now(),
+    };
     return fileSources;
   }
   
@@ -28,14 +57,18 @@ export async function getAllSources(): Promise<Source[]> {
  * Get all lessons (flattened from all sources)
  */
 export async function getAllLessons(): Promise<Lesson[]> {
-  if (cachedLessons) {
-    return cachedLessons;
+  // Check if cache is still valid
+  if (isCacheValid(cachedLessons)) {
+    return cachedLessons!.data;
   }
   
   const fileLessons = await loadAllLessonsFromFiles();
   
   if (fileLessons.length > 0) {
-    cachedLessons = fileLessons;
+    cachedLessons = {
+      data: fileLessons,
+      timestamp: Date.now(),
+    };
     return fileLessons;
   }
   
