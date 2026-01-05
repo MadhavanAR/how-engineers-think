@@ -8,7 +8,9 @@ interface CacheEntry<T> {
   timestamp: number;
 }
 
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+// In development, disable cache completely for instant updates
+// In production, use a short TTL to balance performance and freshness
+const CACHE_TTL = process.env.NODE_ENV === 'development' ? 0 : 5 * 60 * 1000; // 0ms in dev, 5 minutes in production
 
 let cachedSources: CacheEntry<Source[]> | null = null;
 let cachedLessons: CacheEntry<Lesson[]> | null = null;
@@ -36,12 +38,19 @@ export function clearCache(): void {
 export async function getAllSources(): Promise<Source[]> {
   // Check if cache is still valid
   if (isCacheValid(cachedSources)) {
+    console.log('Using cached sources');
     return cachedSources!.data;
   }
   
+  console.log('Loading sources from files...');
   const fileSources = await loadSourcesFromFiles();
+  console.log(`Loaded ${fileSources.length} source(s) from files`);
   
   if (fileSources.length > 0) {
+    fileSources.forEach(source => {
+      console.log(`  - ${source.name}: ${source.lessons.length} lesson(s)`);
+    });
+    
     cachedSources = {
       data: fileSources,
       timestamp: Date.now(),
@@ -49,6 +58,7 @@ export async function getAllSources(): Promise<Source[]> {
     return fileSources;
   }
   
+  console.log('No sources found in files, using default source');
   // Fallback to default source with hardcoded lessons
   return [getDefaultSource()];
 }

@@ -99,8 +99,8 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
     
     try {
       readmeContent = await fs.readFile(readmePath, 'utf-8');
-    } catch {
-      console.warn(`No README.md found in ${lessonDir}`);
+    } catch (error) {
+      console.warn(`No README.md found in ${lessonDir}:`, error);
       return null;
     }
     
@@ -117,6 +117,8 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
         code: pythonCode,
         executable: true,
       });
+    } else {
+      console.warn(`Python example not found or empty: ${pythonPath}`);
     }
     
     const cppPath = join(lessonDir, 'cpp', 'example.cpp');
@@ -128,12 +130,16 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
         executable: true,
         compileNote: 'g++ -std=c++17 example.cpp -o example\n./example',
       });
+    } else {
+      console.warn(`C++ example not found or empty: ${cppPath}`);
     }
     
     if (examples.length === 0) {
-      console.warn(`No code examples found in ${lessonDir}`);
+      console.error(`No code examples found in ${lessonDir}. Python: ${pythonPath}, C++: ${cppPath}`);
       return null;
     }
+    
+    console.log(`Successfully loaded lesson: ${lessonId} with ${examples.length} example(s)`);
     
     return {
       id: lessonId,
@@ -200,11 +206,17 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
         const lessonDir = join(sourceDir, lessonDirName);
         const lessonId = `${sourceId}-${lessonDirName.replace(/^\d+-/, '').toLowerCase()}`;
         
+        console.log(`Attempting to load lesson: ${lessonDirName} (ID: ${lessonId})`);
         const lesson = await loadLesson(lessonDir, lessonId, sourceId);
         if (lesson) {
           lessons.push(lesson);
+          console.log(`✓ Loaded lesson: ${lesson.title}`);
+        } else {
+          console.error(`✗ Failed to load lesson: ${lessonDirName}`);
         }
       }
+      
+      console.log(`Total lessons loaded for ${sourceDirName}: ${lessons.length} out of ${lessonDirs.length} directories`);
       
       if (lessons.length > 0) {
         sources.push({
