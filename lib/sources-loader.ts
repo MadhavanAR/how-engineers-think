@@ -2,8 +2,6 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import { Source, Lesson, CodeExample } from '@/types';
 
-const SOURCES_DIR = join(process.cwd(), 'sources');
-
 interface LessonMetadata {
   title: string;
   subtitle: string;
@@ -156,17 +154,43 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
 /**
  * Load all sources and their lessons
  */
+// Helper function to find the sources directory
+async function findSourcesDir(): Promise<string | null> {
+  const possiblePaths = [
+    join(process.cwd(), 'sources'),
+    join(process.cwd(), '..', 'sources'),
+    join(__dirname, '..', 'sources'),
+    join(__dirname, '..', '..', 'sources'),
+  ];
+  
+  for (const path of possiblePaths) {
+    try {
+      await fs.access(path);
+      console.log(`Found sources directory at: ${path}`);
+      return path;
+    } catch {
+      // Continue to next path
+    }
+  }
+  
+  console.error(`Sources directory not found. Tried paths:`, possiblePaths);
+  return null;
+}
+
 export async function loadSourcesFromFiles(): Promise<Source[]> {
   try {
-    try {
-      await fs.access(SOURCES_DIR);
-    } catch {
-      console.warn(`Sources directory not found: ${SOURCES_DIR}`);
+    // Find the sources directory (handles different deployment environments)
+    const sourcesDir = await findSourcesDir();
+    
+    if (!sourcesDir) {
+      console.error(`Could not find sources directory. Current working directory: ${process.cwd()}`);
       return [];
     }
     
+    console.log(`Loading sources from: ${sourcesDir}`);
+    
     // Read all source directories
-    const entries = await fs.readdir(SOURCES_DIR, { withFileTypes: true });
+    const entries = await fs.readdir(sourcesDir, { withFileTypes: true });
     const sourceDirs = entries
       .filter(entry => entry.isDirectory())
       .map(entry => entry.name)
@@ -176,7 +200,7 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
     
     // Load each source
     for (const sourceDirName of sourceDirs) {
-      const sourceDir = join(SOURCES_DIR, sourceDirName);
+      const sourceDir = join(sourcesDir, sourceDirName);
       const sourceId = sourceDirName.toLowerCase().replace(/\s+/g, '-');
       
       // Try to read source metadata (optional)

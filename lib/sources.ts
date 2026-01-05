@@ -10,7 +10,8 @@ interface CacheEntry<T> {
 
 // In development, disable cache completely for instant updates
 // In production, use a short TTL to balance performance and freshness
-const CACHE_TTL = process.env.NODE_ENV === 'development' ? 0 : 5 * 60 * 1000; // 0ms in dev, 5 minutes in production
+// Force cache to be disabled for now to ensure all lessons show up
+const CACHE_TTL = 0; // Disabled - always reload from files
 
 let cachedSources: CacheEntry<Source[]> | null = null;
 let cachedLessons: CacheEntry<Lesson[]> | null = null;
@@ -67,14 +68,12 @@ export async function getAllSources(): Promise<Source[]> {
  * Get all lessons (flattened from all sources)
  */
 export async function getAllLessons(): Promise<Lesson[]> {
-  // Check if cache is still valid
-  if (isCacheValid(cachedLessons)) {
-    return cachedLessons!.data;
-  }
-  
+  // Always reload from files (cache disabled)
   const fileLessons = await loadAllLessonsFromFiles();
+  console.log(`Loaded ${fileLessons.length} lesson(s) from files`);
   
   if (fileLessons.length > 0) {
+    // Update cache but it won't be used since TTL is 0
     cachedLessons = {
       data: fileLessons,
       timestamp: Date.now(),

@@ -28,6 +28,13 @@ export default function SourcePage() {
         }
         
         const data = await response.json();
+        console.log('Source data received:', data);
+        console.log('Lessons count:', data.lessons?.length || 0);
+        if (data.lessons) {
+          data.lessons.forEach((lesson: any, index: number) => {
+            console.log(`  Lesson ${index + 1}: ${lesson.title} (ID: ${lesson.id})`);
+          });
+        }
         setSource(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load source');

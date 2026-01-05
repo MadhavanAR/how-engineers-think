@@ -10,8 +10,14 @@ export async function GET(
     const source = await getSourceById(params.id);
 
     if (!source) {
+      console.log(`Source not found: ${params.id}`);
       return ApiResponse.notFound('Source not found');
     }
+
+    console.log(`Source found: ${source.name}, Lessons: ${source.lessons.length}`);
+    source.lessons.forEach((lesson, index) => {
+      console.log(`  Lesson ${index + 1}: ${lesson.title} (ID: ${lesson.id})`);
+    });
 
     return ApiResponse.success(source);
   } catch (error) {
