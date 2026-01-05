@@ -194,11 +194,26 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
     const sourcesDir = await findSourcesDir();
     
     if (!sourcesDir) {
-      console.error(`Could not find sources directory. Current working directory: ${process.cwd()}`);
+      console.error(`❌ CRITICAL: Could not find sources directory!`);
+      console.error(`Current working directory: ${process.cwd()}`);
+      console.error(`__dirname: ${__dirname}`);
+      console.error(`NODE_ENV: ${process.env.NODE_ENV}`);
+      console.error(`This means the sources/ directory is not accessible in production.`);
+      console.error(`Please ensure sources/ is committed to git and included in deployment.`);
       return [];
     }
     
+    console.log(`✓ Found sources directory: ${sourcesDir}`);
     console.log(`Loading sources from: ${sourcesDir}`);
+    
+    // Verify the directory is readable
+    try {
+      const entries = await fs.readdir(sourcesDir, { withFileTypes: true });
+      console.log(`✓ Directory is readable. Found ${entries.length} entries`);
+    } catch (error) {
+      console.error(`❌ Cannot read sources directory:`, error);
+      return [];
+    }
     
     // Read all source directories
     const entries = await fs.readdir(sourcesDir, { withFileTypes: true });
@@ -265,9 +280,13 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
       }
     }
     
+    console.log(`✓ Successfully loaded ${sources.length} source(s) with total ${sources.reduce((sum, s) => sum + s.lessons.length, 0)} lesson(s)`);
     return sources;
   } catch (error) {
-    console.error('Error loading sources from files:', error);
+    console.error('❌ CRITICAL ERROR loading sources from files:', error);
+    console.error('Error details:', error instanceof Error ? error.message : String(error));
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('This will cause the app to fall back to hardcoded lessons.');
     return [];
   }
 }

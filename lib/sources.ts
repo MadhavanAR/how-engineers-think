@@ -44,24 +44,43 @@ export async function getAllSources(): Promise<Source[]> {
   }
   
   console.log('Loading sources from files...');
-  const fileSources = await loadSourcesFromFiles();
-  console.log(`Loaded ${fileSources.length} source(s) from files`);
+  console.log(`Current working directory: ${process.cwd()}`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
   
-  if (fileSources.length > 0) {
-    fileSources.forEach(source => {
-      console.log(`  - ${source.name}: ${source.lessons.length} lesson(s)`);
-    });
+  try {
+    const fileSources = await loadSourcesFromFiles();
+    console.log(`Loaded ${fileSources.length} source(s) from files`);
     
-    cachedSources = {
-      data: fileSources,
-      timestamp: Date.now(),
-    };
-    return fileSources;
+    if (fileSources.length > 0) {
+      fileSources.forEach(source => {
+        console.log(`  - ${source.name}: ${source.lessons.length} lesson(s)`);
+        source.lessons.forEach((lesson, index) => {
+          console.log(`    ${index + 1}. ${lesson.title} (ID: ${lesson.id})`);
+        });
+      });
+      
+      cachedSources = {
+        data: fileSources,
+        timestamp: Date.now(),
+      };
+      return fileSources;
+    }
+    
+    console.error('⚠️ WARNING: No sources found in files! This should not happen in production.');
+    console.error('Falling back to default source with hardcoded lessons.');
+    console.error('Please check:');
+    console.error('  1. Is the sources/ directory committed to git?');
+    console.error('  2. Is the sources/ directory included in the deployment?');
+    console.error('  3. Check production logs for path resolution errors');
+    
+    // Fallback to default source with hardcoded lessons
+    return [getDefaultSource()];
+  } catch (error) {
+    console.error('❌ ERROR loading sources from files:', error);
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('Falling back to default source');
+    return [getDefaultSource()];
   }
-  
-  console.log('No sources found in files, using default source');
-  // Fallback to default source with hardcoded lessons
-  return [getDefaultSource()];
 }
 
 /**

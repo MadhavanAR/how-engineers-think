@@ -14,6 +14,13 @@ const nextConfig = {
     }
     return config;
   },
+  // Ensure sources directory is copied to output
+  // This is critical for serverless deployments
+  experimental: {
+    outputFileTracingIncludes: {
+      '/api/**': ['./sources/**/*'],
+    },
+  },
 }
 
 module.exports = nextConfig
