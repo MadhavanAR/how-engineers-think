@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { CodeExecutionRequest, CodeExecutionResponse } from '@/types';
+import { executeCode, compileCpp } from '@/lib/services/client-code-executor';
 
 interface UseCodeExecutionReturn {
   output: string;
@@ -30,13 +31,10 @@ export function useCodeExecution(): UseCodeExecutionReturn {
     setExecutionTime(undefined);
 
     try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(request),
-      });
-
-      const result: CodeExecutionResponse = await response.json();
+      // Use client-side code executor instead of API
+      // Map 'compile-and-run' to 'run' for C++
+      const action = request.action === 'compile-and-run' ? 'run' : request.action;
+      const result = await executeCode(request.code, request.language, action);
 
       if (result.success) {
         setOutput(result.output || '');
@@ -60,17 +58,8 @@ export function useCodeExecution(): UseCodeExecutionReturn {
     setCompilationMessage('');
 
     try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code,
-          language,
-          action: 'compile',
-        }),
-      });
-
-      const result: CodeExecutionResponse = await response.json();
+      // Use client-side code executor instead of API
+      const result = await compileCpp(code);
 
       if (result.success) {
         setCompiled(true);
@@ -111,4 +100,3 @@ export function useCodeExecution(): UseCodeExecutionReturn {
     reset,
   };
 }
-

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Lesson, CodeExecutionResponse } from '@/types';
+import CopyCodeButton from './CopyCodeButton';
 
 interface SingleIDEProps {
   lesson: Lesson;
@@ -10,7 +11,7 @@ interface SingleIDEProps {
 export default function SingleIDE({ lesson }: SingleIDEProps) {
   const pythonExample = lesson.examples.find(e => e.language === 'python');
   const cppExample = lesson.examples.find(e => e.language === 'cpp');
-  
+
   const [selectedLanguage, setSelectedLanguage] = useState<'python' | 'cpp'>('python');
   const [originalCode, setOriginalCode] = useState<string>(pythonExample?.code || '');
   const [currentCode, setCurrentCode] = useState<string>(pythonExample?.code || '');
@@ -23,6 +24,8 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
   const [error, setError] = useState<string | undefined>();
   const [isModified, setIsModified] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [codeHistory, setCodeHistory] = useState<string[]>([pythonExample?.code || '']);
+  const [historyIndex, setHistoryIndex] = useState(0);
 
   const isCpp = selectedLanguage === 'cpp';
   const currentExample = isCpp ? cppExample : pythonExample;
@@ -32,10 +35,13 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
     if (selectedLanguage === 'cpp' && cppExample) {
       setOriginalCode(cppExample.code);
       setCurrentCode(cppExample.code);
+      setCodeHistory([cppExample.code]);
     } else if (pythonExample) {
       setOriginalCode(pythonExample.code);
       setCurrentCode(pythonExample.code);
+      setCodeHistory([pythonExample.code]);
     }
+    setHistoryIndex(0);
     setOutput('');
     setError(undefined);
     setCompiled(false);
@@ -55,7 +61,36 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
   }, [currentCode, originalCode]);
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCurrentCode(e.target.value);
+    const newCode = e.target.value;
+    setCurrentCode(newCode);
+
+    // Add to history (limit to last 50 changes)
+    if (newCode !== codeHistory[historyIndex]) {
+      const newHistory = codeHistory.slice(0, historyIndex + 1);
+      newHistory.push(newCode);
+      if (newHistory.length > 50) {
+        newHistory.shift();
+      } else {
+        setHistoryIndex(newHistory.length - 1);
+      }
+      setCodeHistory(newHistory);
+    }
+  };
+
+  const handleUndo = () => {
+    if (historyIndex > 0) {
+      const newIndex = historyIndex - 1;
+      setHistoryIndex(newIndex);
+      setCurrentCode(codeHistory[newIndex]);
+    }
+  };
+
+  const handleRedo = () => {
+    if (historyIndex < codeHistory.length - 1) {
+      const newIndex = historyIndex + 1;
+      setHistoryIndex(newIndex);
+      setCurrentCode(codeHistory[newIndex]);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -66,7 +101,7 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
       const end = textarea.selectionEnd;
       const newValue = currentCode.substring(0, start) + '  ' + currentCode.substring(end);
       setCurrentCode(newValue);
-      
+
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + 2;
       }, 0);
@@ -75,6 +110,8 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
 
   const handleReset = () => {
     setCurrentCode(originalCode);
+    setCodeHistory([originalCode]);
+    setHistoryIndex(0);
     setOutput('');
     setError(undefined);
     setCompiled(false);
@@ -89,19 +126,9 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
     setCompilationMessage('');
 
     try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code: originalCode,
-          language: 'cpp',
-          action: 'compile',
-        }),
-      });
-
-      const result: CodeExecutionResponse = await response.json();
+      // Use client-side code executor instead of API
+      const { compileCpp } = await import('@/lib/services/client-code-executor');
+      const result = await compileCpp(originalCode);
 
       if (result.success) {
         setCompiled(true);
@@ -131,19 +158,13 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
     setCompilationMessage('');
 
     try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code: isCpp ? originalCode : currentCode,
-          language: selectedLanguage,
-          action: isCpp ? 'run' : undefined,
-        }),
-      });
-
-      const result: CodeExecutionResponse = await response.json();
+      // Use client-side code executor instead of API
+      const { executeCode } = await import('@/lib/services/client-code-executor');
+      const result = await executeCode(
+        isCpp ? originalCode : currentCode,
+        selectedLanguage,
+        isCpp ? 'run' : undefined
+      );
 
       if (result.success) {
         setOutput(result.output || '');
@@ -205,33 +226,56 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
   return (
     <div className="code-example">
       <div className="code-header">
-        <div className="language-tabs">
-          {pythonExample && (
-            <button
-              className={`language-tab ${selectedLanguage === 'python' ? 'active' : ''}`}
-              onClick={() => setSelectedLanguage('python')}
-            >
-              Python
-            </button>
-          )}
-          {cppExample && (
-            <button
-              className={`language-tab ${selectedLanguage === 'cpp' ? 'active' : ''}`}
-              onClick={() => setSelectedLanguage('cpp')}
-            >
-              C++
-            </button>
-          )}
+        <div className="code-header-left">
+          <div className="language-tabs">
+            {pythonExample && (
+              <button
+                className={`language-tab ${selectedLanguage === 'python' ? 'active' : ''}`}
+                onClick={() => setSelectedLanguage('python')}
+              >
+                Python
+              </button>
+            )}
+            {cppExample && (
+              <button
+                className={`language-tab ${selectedLanguage === 'cpp' ? 'active' : ''}`}
+                onClick={() => setSelectedLanguage('cpp')}
+              >
+                C++
+              </button>
+            )}
+          </div>
+          {!isCpp && <CopyCodeButton code={currentCode} />}
         </div>
         <div className="header-actions">
-          {!isCpp && isModified && (
-            <button
-              className="reset-button"
-              onClick={handleReset}
-              title="Reset to original code"
-            >
-              Reset
-            </button>
+          {!isCpp && (
+            <div className="code-history-buttons">
+              <button
+                className="history-button"
+                onClick={handleUndo}
+                disabled={historyIndex === 0}
+                title="Undo (Ctrl+Z)"
+              >
+                ↶
+              </button>
+              <button
+                className="history-button"
+                onClick={handleRedo}
+                disabled={historyIndex === codeHistory.length - 1}
+                title="Redo (Ctrl+Y)"
+              >
+                ↷
+              </button>
+              {isModified && (
+                <button
+                  className="reset-button"
+                  onClick={handleReset}
+                  title="Reset to original code"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
           )}
           {currentExample?.executable && (
             <div className="action-buttons">
@@ -272,11 +316,7 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
       <div className={`${getOutputClassName()} output-header`}>
         <div className="output-content">
           {getOutputContent()}
-          {executionTime && (
-            <div className="execution-time">
-              Executed in {executionTime}ms
-            </div>
-          )}
+          {executionTime && <div className="execution-time">Executed in {executionTime}ms</div>}
         </div>
         <button
           className="theme-toggle"
@@ -289,4 +329,3 @@ export default function SingleIDE({ lesson }: SingleIDEProps) {
     </div>
   );
 }
-

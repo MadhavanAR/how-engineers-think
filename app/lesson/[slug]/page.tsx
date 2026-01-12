@@ -19,16 +19,15 @@ export default function LessonPage() {
       try {
         setLoading(true);
         setError(null);
-        
-        // Fetch from API to get dynamically loaded lessons
-        const response = await fetch(`/api/lessons/${slug}`);
-        
-        if (!response.ok) {
+
+        // Use frontend data service instead of API
+        const { getLessonById } = await import('@/lib/services/frontend-data');
+        const foundLesson = await getLessonById(slug);
+
+        if (!foundLesson) {
           setError('Lesson not found');
           return;
         }
-        
-        const foundLesson = await response.json();
         setLesson(foundLesson);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load lesson');
@@ -83,4 +82,3 @@ export default function LessonPage() {
     </div>
   );
 }
-

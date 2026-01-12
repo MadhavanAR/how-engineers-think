@@ -1,0 +1,286 @@
+{
+  "sources": [
+    {
+      "id": "pragmatic-programmer",
+      "name": "pragmatic-programmer",
+      "lessons": [
+        {
+          "id": "pragmatic-programmer-01-taking-responsibility",
+          "sourceId": "pragmatic-programmer",
+          "title": "Taking Responsibility",
+          "subtitle": "The Cat Ate My Source Code",
+          "description": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem.",
+          "concept": {
+            "title": "The idea",
+            "content": "You know how in group projects, some people always blame others when things go wrong? \"It's not my fault, the teacher didn't explain it right!\" or \"My partner didn't do their part!\" Good engineers don't do that. When something breaks, they say: \"Okay, here's what went wrong, and here's how we can fix it.\" No excuses. Just honesty and solutions. This makes people trust you, and problems get solved way faster."
+          },
+          "scenario": {
+            "title": "Real-world scenario",
+            "content": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem."
+          },
+          "applications": [
+            "Copying files from one computer to another (like moving your music library)",
+            "Setting up automatic tasks (like your phone backing up photos every night)",
+            "When websites automatically test new features before showing them to users",
+            "The hidden code that makes websites and apps work (like the engine in a car)"
+          ],
+          "examples": [
+            {
+              "language": "python",
+              "code": "import os\n# This lets us check if files exist on the computer\n\n\ndef process_data(file_path):\n    # First, let's check if the file actually exists\n    # This is like checking if you have your homework before trying to turn it in\n    \n    if not os.path.exists(file_path):\n        # Oops! The file doesn't exist\n        # Instead of crashing and saying \"something went wrong\",\n        # we give a clear, helpful error message\n        \n        raise FileNotFoundError(\n            \"Missing input file. Please verify the backup.\"\n        )\n\n    # If we get here, the file exists! Now we can process it safely\n    print(\"Processing data safely.\")\n\n\n# Now let's try to use this function\ntry:\n    # \"try\" means \"attempt this, but be ready if it fails\"\n    # Like trying to catch a ball - you might drop it, so be ready!\n    \n    process_data(\"customer_records.csv\")\n    # We're trying to process a file called \"customer_records.csv\"\n    # If the file does not exist, the function will raise an error\n\nexcept Exception as e:\n    # \"except\" catches any errors that happen above\n    # Instead of the program crashing, we handle it nicely\n    \n    print(f\"Handled safely: {e}\")\n    # We print a clear message about what went wrong\n    # This is taking responsibility - we're not hiding the problem!",
+              "executable": true
+            },
+            {
+              "language": "cpp",
+              "code": "#include <iostream>      // For printing to screen\n#include <fstream>       // For reading files\n#include <stdexcept>     // For error handling\n#include <string>        // For text/strings\n\nvoid processData(const std::string& filePath) {\n    // Try to open the file\n    std::ifstream file(filePath);\n    \n    // Check if we actually opened it\n    if (!file.is_open()) {\n        // File doesn't exist! Instead of crashing, give a clear error\n        throw std::runtime_error(\"Missing input file. Verify backup.\");\n    }\n\n    // If we get here, the file exists! Process it safely\n    std::cout << \"Processing data safely.\" << std::endl;\n}\n\nint main() {\n    try {\n        // Try to process the file\n        // \"try\" means \"attempt this, but be ready if it fails\"\n        processData(\"customer_records.csv\");\n    } catch (const std::exception& e) {\n        // \"catch\" handles any errors that happen above\n        // Instead of crashing, we print a clear error message\n        std::cerr << \"Handled safely: \" << e.what() << std::endl;\n    }\n    return 0;  // Everything finished!\n}",
+              "executable": true,
+              "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+            }
+          ]
+        },
+        {
+          "id": "pragmatic-programmer-02-software-entropy",
+          "sourceId": "pragmatic-programmer",
+          "title": "Software Entropy",
+          "subtitle": "Broken Windows",
+          "description": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen.",
+          "concept": {
+            "title": "The idea",
+            "content": "You know that broken window theory? If a building has one broken window that nobody fixes, people think \"nobody cares about this place.\" So they break more windows, spray graffiti, and trash piles up. The same thing happens with code! If you leave small problems unfixed (like error messages that pop up all the time, or code that's kinda broken), other programmers think \"nobody cares about this code.\" So they stop being careful, add more broken stuff, and everything gets worse. Good engineers fix small problems right away. If they can't fix it completely, they at least put a temporary fix (like boarding up that broken window) so it stops causing more problems."
+          },
+          "scenario": {
+            "title": "Real-world scenario",
+            "content": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen."
+          },
+          "applications": [
+            "Warning messages that keep popping up but nobody fixes them (like that annoying \"check engine\" light in your car)",
+            "Old website buttons that don't work anymore but are still there (like a \"Share on MySpace\" button)",
+            "Instructions that are wrong because the website changed (like a tutorial that says \"click the blue button\" but it's now red)",
+            "Test code that was left in the final product (like leaving sticky notes in your finished homework)"
+          ],
+          "examples": [
+            {
+              "language": "python",
+              "code": "# This shows how ignoring small problems makes everything worse\n# (Like that broken window theory we talked about!)\n\n\ndef get_legacy_data():\n    # This is old code that's broken but still in the system\n    # It's like that broken window - if we leave it, things get worse\n    \n    # THE PROBLEM:\n    # If we let this function crash randomly, it creates noise\n    # Other developers see errors and think \"nobody cares about this code\"\n    \n    # THE FIX:\n    # Instead of letting it crash, we \"board it up\"\n    # We return a safe, predictable response even though it's not perfect\n    \n    return {\n        \"status\": \"inactive\",\n        \"data\": None\n    }\n    # This prevents errors, stops confusion, and keeps things clean\n\n\ndef get_user_profile():\n    # This is NEW code we're writing today\n    # It needs to use the old code above\n    \n    legacy = get_legacy_data()\n    # Because we \"boarded up\" the broken window above,\n    # this new code works smoothly without errors\n    \n    return {\n        \"user\": \"example\",\n        \"legacy_status\": legacy[\"status\"]\n    }\n\n\nprint(get_user_profile())\n# Everything works cleanly because we fixed the broken window!",
+              "executable": true
+            },
+            {
+              "language": "cpp",
+              "code": "#include <iostream>\n#include <string>\n\n// This is old, broken code that's still in the system\n// It's like that broken window - we need to fix it!\nstd::string getLegacyData() {\n    // THE PROBLEM: This function could crash randomly\n    // THE FIX: Instead of crashing, return something safe\n    // This is \"boarding up the broken window\"\n    return \"inactive\";\n}\n\nint main() {\n    // This is NEW code we're writing\n    // It needs to use the old function above\n    \n    std::string legacyStatus = getLegacyData();\n    // Because we \"boarded up\" the broken window above,\n    // this new code works without errors\n\n    std::cout << \"Legacy status: \" << legacyStatus << std::endl;\n    return 0;\n}",
+              "executable": true,
+              "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+            }
+          ]
+        },
+        {
+          "id": "pragmatic-programmer-03-stone-soup-and-boiled-frogs",
+          "sourceId": "pragmatic-programmer",
+          "title": "Stone Soup and Boiled Frogs",
+          "subtitle": "Watching slow problems before they become big failures",
+          "description": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem.",
+          "concept": {
+            "title": "The idea",
+            "content": "You know that story about the frog? If you put a frog in boiling water, it jumps out. But if you put it in cold water and slowly heat it up, the frog doesn't notice until it's too late. The same thing happens with code! Projects usually don't fail suddenly. They drift. Each small shortcut, delay, or \"temporary\" decision feels harmless, but over time the system becomes harder to maintain, slower to change, and fragile. Good engineers regularly step back and ask: \"Has this slowly become a problem?\" They catch things before they get too bad, just like checking if the water is getting too hot."
+          },
+          "scenario": {
+            "title": "Real-world scenario",
+            "content": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem."
+          },
+          "applications": [
+            "Websites that get slower and slower as more features are added (like a backpack that gets heavier each day until you can't carry it)",
+            "Code that works but becomes harder to understand over time (like a room that gets messier each day until you can't find anything)",
+            "Programs that take longer and longer to start up (like a computer that gets slower each time you install something)",
+            "Systems that feel \"heavy\" without a clear breaking point (like a car that gets noisier each month until one day it won't start)"
+          ],
+          "examples": [
+            {
+              "language": "python",
+              "code": "# Day 3: Stone Soup and Boiled Frogs\n# Small additions slowly increase complexity without breaking functionality.\n\n\ndef calculate_price(base_price, is_sale, is_vip, is_international):\n    price = base_price\n\n    # small rule added early\n    if is_sale:\n        price *= 0.9\n\n    # added later for VIP customers\n    if is_vip:\n        price *= 0.8\n\n    # added months later for international shipping\n    if is_international:\n        price += 10\n\n    # nothing is broken,\n    # but complexity is quietly growing\n    return price\n\n\nfinal_price = calculate_price(\n    base_price=100,\n    is_sale=True,\n    is_vip=True,\n    is_international=True\n)\n\nprint(final_price)",
+              "executable": true
+            },
+            {
+              "language": "cpp",
+              "code": "#include <iostream>\n\n// Day 3: Stone Soup and Boiled Frogs\n// Logic still works, but complexity increases gradually.\n\ndouble calculatePrice(double basePrice, bool sale, bool vip, bool international) {\n    double price = basePrice;\n\n    if (sale) {\n        price *= 0.9;\n    }\n\n    if (vip) {\n        price *= 0.8;\n    }\n\n    if (international) {\n        price += 10;\n    }\n\n    // growing conditionals signal slow decay\n    return price;\n}\n\nint main() {\n    double finalPrice = calculatePrice(100, true, true, true);\n    std::cout << finalPrice << std::endl;\n    return 0;\n}",
+              "executable": true,
+              "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+            }
+          ]
+        },
+        {
+          "id": "pragmatic-programmer-04-good-enough-software",
+          "sourceId": "pragmatic-programmer",
+          "title": "Good-Enough Software",
+          "subtitle": "Knowing when to stop polishing",
+          "description": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone.",
+          "concept": {
+            "title": "The idea",
+            "content": "\"Good enough\" doesn't mean sloppy or buggy. It means the software does what it needs to do, works correctly, and can be improved later if needed. Think of it like cooking dinner - you don't need a 5-star restaurant meal every night. Sometimes a simple, tasty meal that fills you up is perfect. Good engineers understand that quality is a trade-off. You can spend weeks making something perfect, or you can spend a few days making something that works well and helps people right now. The best choice depends on what you actually need."
+          },
+          "scenario": {
+            "title": "Real-world scenario",
+            "content": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone."
+          },
+          "applications": [
+            "Features that take months to build because \"one more thing\" keeps getting added (like a shopping list that never gets finished because you keep adding items)",
+            "Apps that are delayed because the design needs to be \"perfect\" (like waiting to post a photo until you've edited it 50 times)",
+            "Code that's over-engineered for simple problems (like using a rocket ship to deliver pizza)",
+            "Teams that keep improving something that already works instead of moving to the next important thing (like polishing a car that's already clean)"
+          ],
+          "examples": [
+            {
+              "language": "python",
+              "code": "# Day 4: Good-Enough Software\n# This code does exactly what it needs to do - no more, no less.\n# It's simple, clear, and works correctly. That's \"good enough\"!\n\n\ndef calculate_discount(price, discount_percent):\n    # This function calculates the final price after a discount\n    # It's straightforward and does the job - no fancy features needed!\n    # Like a simple calculator: you put in numbers, you get the answer\n    \n    return price * (1 - discount_percent)\n    # This is the math: original price minus the discount percentage\n    # For example: $100 with 20% off = $100 * (1 - 0.2) = $80\n\n\n# Let's use our function\nfinal_price = calculate_discount(100, 0.2)\n# We're calculating: $100 item with 20% discount\n\nprint(final_price)\n# This prints the result: 80.0\n\n# See? Simple, clear, and it works!\n# We could add fancy features like:\n# - Handling multiple discounts\n# - Currency formatting\n# - Tax calculations\n# - Error checking for invalid inputs\n# \n# But for now, this is \"good enough\" - it solves the problem!",
+              "executable": true
+            },
+            {
+              "language": "cpp",
+              "code": "#include <iostream>\n\n// Day 4: Good-Enough Software\n// This code does exactly what it needs to do - simple and sufficient!\n\ndouble calculateDiscount(double price, double discountPercent) {\n    // This function calculates the final price after a discount\n    // It's straightforward and does the job - no fancy features needed!\n    // Like a simple calculator: you put in numbers, you get the answer\n    \n    return price * (1 - discountPercent);\n    // This is the math: original price minus the discount percentage\n    // For example: $100 with 20% off = $100 * (1 - 0.2) = $80\n}\n\nint main() {\n    // Let's use our function\n    double finalPrice = calculateDiscount(100, 0.2);\n    // We're calculating: $100 item with 20% discount\n    \n    std::cout << finalPrice << std::endl;\n    // This prints the result: 80\n    \n    // See? Simple, clear, and it works!\n    // We could add fancy features like:\n    // - Handling multiple discounts\n    // - Currency formatting\n    // - Tax calculations\n    // - Error checking for invalid inputs\n    // \n    // But for now, this is \"good enough\" - it solves the problem!\n    \n    return 0;\n}",
+              "executable": true,
+              "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "pragmatic-programmer-01-taking-responsibility",
+      "sourceId": "pragmatic-programmer",
+      "title": "Taking Responsibility",
+      "subtitle": "The Cat Ate My Source Code",
+      "description": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem.",
+      "concept": {
+        "title": "The idea",
+        "content": "You know how in group projects, some people always blame others when things go wrong? \"It's not my fault, the teacher didn't explain it right!\" or \"My partner didn't do their part!\" Good engineers don't do that. When something breaks, they say: \"Okay, here's what went wrong, and here's how we can fix it.\" No excuses. Just honesty and solutions. This makes people trust you, and problems get solved way faster."
+      },
+      "scenario": {
+        "title": "Real-world scenario",
+        "content": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem."
+      },
+      "applications": [
+        "Copying files from one computer to another (like moving your music library)",
+        "Setting up automatic tasks (like your phone backing up photos every night)",
+        "When websites automatically test new features before showing them to users",
+        "The hidden code that makes websites and apps work (like the engine in a car)"
+      ],
+      "examples": [
+        {
+          "language": "python",
+          "code": "import os\n# This lets us check if files exist on the computer\n\n\ndef process_data(file_path):\n    # First, let's check if the file actually exists\n    # This is like checking if you have your homework before trying to turn it in\n    \n    if not os.path.exists(file_path):\n        # Oops! The file doesn't exist\n        # Instead of crashing and saying \"something went wrong\",\n        # we give a clear, helpful error message\n        \n        raise FileNotFoundError(\n            \"Missing input file. Please verify the backup.\"\n        )\n\n    # If we get here, the file exists! Now we can process it safely\n    print(\"Processing data safely.\")\n\n\n# Now let's try to use this function\ntry:\n    # \"try\" means \"attempt this, but be ready if it fails\"\n    # Like trying to catch a ball - you might drop it, so be ready!\n    \n    process_data(\"customer_records.csv\")\n    # We're trying to process a file called \"customer_records.csv\"\n    # If the file does not exist, the function will raise an error\n\nexcept Exception as e:\n    # \"except\" catches any errors that happen above\n    # Instead of the program crashing, we handle it nicely\n    \n    print(f\"Handled safely: {e}\")\n    # We print a clear message about what went wrong\n    # This is taking responsibility - we're not hiding the problem!",
+          "executable": true
+        },
+        {
+          "language": "cpp",
+          "code": "#include <iostream>      // For printing to screen\n#include <fstream>       // For reading files\n#include <stdexcept>     // For error handling\n#include <string>        // For text/strings\n\nvoid processData(const std::string& filePath) {\n    // Try to open the file\n    std::ifstream file(filePath);\n    \n    // Check if we actually opened it\n    if (!file.is_open()) {\n        // File doesn't exist! Instead of crashing, give a clear error\n        throw std::runtime_error(\"Missing input file. Verify backup.\");\n    }\n\n    // If we get here, the file exists! Process it safely\n    std::cout << \"Processing data safely.\" << std::endl;\n}\n\nint main() {\n    try {\n        // Try to process the file\n        // \"try\" means \"attempt this, but be ready if it fails\"\n        processData(\"customer_records.csv\");\n    } catch (const std::exception& e) {\n        // \"catch\" handles any errors that happen above\n        // Instead of crashing, we print a clear error message\n        std::cerr << \"Handled safely: \" << e.what() << std::endl;\n    }\n    return 0;  // Everything finished!\n}",
+          "executable": true,
+          "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+        }
+      ]
+    },
+    {
+      "id": "pragmatic-programmer-02-software-entropy",
+      "sourceId": "pragmatic-programmer",
+      "title": "Software Entropy",
+      "subtitle": "Broken Windows",
+      "description": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen.",
+      "concept": {
+        "title": "The idea",
+        "content": "You know that broken window theory? If a building has one broken window that nobody fixes, people think \"nobody cares about this place.\" So they break more windows, spray graffiti, and trash piles up. The same thing happens with code! If you leave small problems unfixed (like error messages that pop up all the time, or code that's kinda broken), other programmers think \"nobody cares about this code.\" So they stop being careful, add more broken stuff, and everything gets worse. Good engineers fix small problems right away. If they can't fix it completely, they at least put a temporary fix (like boarding up that broken window) so it stops causing more problems."
+      },
+      "scenario": {
+        "title": "Real-world scenario",
+        "content": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen."
+      },
+      "applications": [
+        "Warning messages that keep popping up but nobody fixes them (like that annoying \"check engine\" light in your car)",
+        "Old website buttons that don't work anymore but are still there (like a \"Share on MySpace\" button)",
+        "Instructions that are wrong because the website changed (like a tutorial that says \"click the blue button\" but it's now red)",
+        "Test code that was left in the final product (like leaving sticky notes in your finished homework)"
+      ],
+      "examples": [
+        {
+          "language": "python",
+          "code": "# This shows how ignoring small problems makes everything worse\n# (Like that broken window theory we talked about!)\n\n\ndef get_legacy_data():\n    # This is old code that's broken but still in the system\n    # It's like that broken window - if we leave it, things get worse\n    \n    # THE PROBLEM:\n    # If we let this function crash randomly, it creates noise\n    # Other developers see errors and think \"nobody cares about this code\"\n    \n    # THE FIX:\n    # Instead of letting it crash, we \"board it up\"\n    # We return a safe, predictable response even though it's not perfect\n    \n    return {\n        \"status\": \"inactive\",\n        \"data\": None\n    }\n    # This prevents errors, stops confusion, and keeps things clean\n\n\ndef get_user_profile():\n    # This is NEW code we're writing today\n    # It needs to use the old code above\n    \n    legacy = get_legacy_data()\n    # Because we \"boarded up\" the broken window above,\n    # this new code works smoothly without errors\n    \n    return {\n        \"user\": \"example\",\n        \"legacy_status\": legacy[\"status\"]\n    }\n\n\nprint(get_user_profile())\n# Everything works cleanly because we fixed the broken window!",
+          "executable": true
+        },
+        {
+          "language": "cpp",
+          "code": "#include <iostream>\n#include <string>\n\n// This is old, broken code that's still in the system\n// It's like that broken window - we need to fix it!\nstd::string getLegacyData() {\n    // THE PROBLEM: This function could crash randomly\n    // THE FIX: Instead of crashing, return something safe\n    // This is \"boarding up the broken window\"\n    return \"inactive\";\n}\n\nint main() {\n    // This is NEW code we're writing\n    // It needs to use the old function above\n    \n    std::string legacyStatus = getLegacyData();\n    // Because we \"boarded up\" the broken window above,\n    // this new code works without errors\n\n    std::cout << \"Legacy status: \" << legacyStatus << std::endl;\n    return 0;\n}",
+          "executable": true,
+          "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+        }
+      ]
+    },
+    {
+      "id": "pragmatic-programmer-03-stone-soup-and-boiled-frogs",
+      "sourceId": "pragmatic-programmer",
+      "title": "Stone Soup and Boiled Frogs",
+      "subtitle": "Watching slow problems before they become big failures",
+      "description": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem.",
+      "concept": {
+        "title": "The idea",
+        "content": "You know that story about the frog? If you put a frog in boiling water, it jumps out. But if you put it in cold water and slowly heat it up, the frog doesn't notice until it's too late. The same thing happens with code! Projects usually don't fail suddenly. They drift. Each small shortcut, delay, or \"temporary\" decision feels harmless, but over time the system becomes harder to maintain, slower to change, and fragile. Good engineers regularly step back and ask: \"Has this slowly become a problem?\" They catch things before they get too bad, just like checking if the water is getting too hot."
+      },
+      "scenario": {
+        "title": "Real-world scenario",
+        "content": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem."
+      },
+      "applications": [
+        "Websites that get slower and slower as more features are added (like a backpack that gets heavier each day until you can't carry it)",
+        "Code that works but becomes harder to understand over time (like a room that gets messier each day until you can't find anything)",
+        "Programs that take longer and longer to start up (like a computer that gets slower each time you install something)",
+        "Systems that feel \"heavy\" without a clear breaking point (like a car that gets noisier each month until one day it won't start)"
+      ],
+      "examples": [
+        {
+          "language": "python",
+          "code": "# Day 3: Stone Soup and Boiled Frogs\n# Small additions slowly increase complexity without breaking functionality.\n\n\ndef calculate_price(base_price, is_sale, is_vip, is_international):\n    price = base_price\n\n    # small rule added early\n    if is_sale:\n        price *= 0.9\n\n    # added later for VIP customers\n    if is_vip:\n        price *= 0.8\n\n    # added months later for international shipping\n    if is_international:\n        price += 10\n\n    # nothing is broken,\n    # but complexity is quietly growing\n    return price\n\n\nfinal_price = calculate_price(\n    base_price=100,\n    is_sale=True,\n    is_vip=True,\n    is_international=True\n)\n\nprint(final_price)",
+          "executable": true
+        },
+        {
+          "language": "cpp",
+          "code": "#include <iostream>\n\n// Day 3: Stone Soup and Boiled Frogs\n// Logic still works, but complexity increases gradually.\n\ndouble calculatePrice(double basePrice, bool sale, bool vip, bool international) {\n    double price = basePrice;\n\n    if (sale) {\n        price *= 0.9;\n    }\n\n    if (vip) {\n        price *= 0.8;\n    }\n\n    if (international) {\n        price += 10;\n    }\n\n    // growing conditionals signal slow decay\n    return price;\n}\n\nint main() {\n    double finalPrice = calculatePrice(100, true, true, true);\n    std::cout << finalPrice << std::endl;\n    return 0;\n}",
+          "executable": true,
+          "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+        }
+      ]
+    },
+    {
+      "id": "pragmatic-programmer-04-good-enough-software",
+      "sourceId": "pragmatic-programmer",
+      "title": "Good-Enough Software",
+      "subtitle": "Knowing when to stop polishing",
+      "description": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone.",
+      "concept": {
+        "title": "The idea",
+        "content": "\"Good enough\" doesn't mean sloppy or buggy. It means the software does what it needs to do, works correctly, and can be improved later if needed. Think of it like cooking dinner - you don't need a 5-star restaurant meal every night. Sometimes a simple, tasty meal that fills you up is perfect. Good engineers understand that quality is a trade-off. You can spend weeks making something perfect, or you can spend a few days making something that works well and helps people right now. The best choice depends on what you actually need."
+      },
+      "scenario": {
+        "title": "Real-world scenario",
+        "content": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone."
+      },
+      "applications": [
+        "Features that take months to build because \"one more thing\" keeps getting added (like a shopping list that never gets finished because you keep adding items)",
+        "Apps that are delayed because the design needs to be \"perfect\" (like waiting to post a photo until you've edited it 50 times)",
+        "Code that's over-engineered for simple problems (like using a rocket ship to deliver pizza)",
+        "Teams that keep improving something that already works instead of moving to the next important thing (like polishing a car that's already clean)"
+      ],
+      "examples": [
+        {
+          "language": "python",
+          "code": "# Day 4: Good-Enough Software\n# This code does exactly what it needs to do - no more, no less.\n# It's simple, clear, and works correctly. That's \"good enough\"!\n\n\ndef calculate_discount(price, discount_percent):\n    # This function calculates the final price after a discount\n    # It's straightforward and does the job - no fancy features needed!\n    # Like a simple calculator: you put in numbers, you get the answer\n    \n    return price * (1 - discount_percent)\n    # This is the math: original price minus the discount percentage\n    # For example: $100 with 20% off = $100 * (1 - 0.2) = $80\n\n\n# Let's use our function\nfinal_price = calculate_discount(100, 0.2)\n# We're calculating: $100 item with 20% discount\n\nprint(final_price)\n# This prints the result: 80.0\n\n# See? Simple, clear, and it works!\n# We could add fancy features like:\n# - Handling multiple discounts\n# - Currency formatting\n# - Tax calculations\n# - Error checking for invalid inputs\n# \n# But for now, this is \"good enough\" - it solves the problem!",
+          "executable": true
+        },
+        {
+          "language": "cpp",
+          "code": "#include <iostream>\n\n// Day 4: Good-Enough Software\n// This code does exactly what it needs to do - simple and sufficient!\n\ndouble calculateDiscount(double price, double discountPercent) {\n    // This function calculates the final price after a discount\n    // It's straightforward and does the job - no fancy features needed!\n    // Like a simple calculator: you put in numbers, you get the answer\n    \n    return price * (1 - discountPercent);\n    // This is the math: original price minus the discount percentage\n    // For example: $100 with 20% off = $100 * (1 - 0.2) = $80\n}\n\nint main() {\n    // Let's use our function\n    double finalPrice = calculateDiscount(100, 0.2);\n    // We're calculating: $100 item with 20% discount\n    \n    std::cout << finalPrice << std::endl;\n    // This prints the result: 80\n    \n    // See? Simple, clear, and it works!\n    // We could add fancy features like:\n    // - Handling multiple discounts\n    // - Currency formatting\n    // - Tax calculations\n    // - Error checking for invalid inputs\n    // \n    // But for now, this is \"good enough\" - it solves the problem!\n    \n    return 0;\n}",
+          "executable": true,
+          "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+        }
+      ]
+    }
+  ],
+  "generatedAt": "2026-01-12T17:19:48.380Z",
+  "version": "1.0.0"
+}

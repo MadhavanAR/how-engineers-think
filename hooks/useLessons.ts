@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Lesson } from '@/types';
+import { getAllLessons, preloadData } from '@/lib/services/frontend-data';
 
 interface UseLessonsReturn {
   lessons: Lesson[];
@@ -17,13 +18,9 @@ export function useLessons(): UseLessonsReturn {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('/api/lessons');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch lessons');
-      }
-      
-      const data = await response.json();
+
+      // Use frontend data service instead of API
+      const data = await getAllLessons();
       setLessons(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -34,9 +31,10 @@ export function useLessons(): UseLessonsReturn {
   };
 
   useEffect(() => {
+    // Preload data on mount
+    preloadData();
     fetchLessons();
   }, []);
 
   return { lessons, loading, error, refetch: fetchLessons };
 }
-

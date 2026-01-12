@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import LessonCard from '@/components/LessonCard';
 import Footer from '@/components/Footer';
+import ProgressBar from '@/components/ProgressBar';
 import { Source } from '@/types';
 
 export default function SourcePage() {
@@ -19,15 +20,15 @@ export default function SourcePage() {
       try {
         setLoading(true);
         setError(null);
-        
-        const response = await fetch(`/api/sources/${sourceId}`);
-        
-        if (!response.ok) {
+
+        // Use frontend data service instead of API
+        const { getSourceById } = await import('@/lib/services/frontend-data');
+        const data = await getSourceById(sourceId);
+
+        if (!data) {
           setError('Source not found');
           return;
         }
-        
-        const data = await response.json();
         console.log('Source data received:', data);
         console.log('Lessons count:', data.lessons?.length || 0);
         if (data.lessons) {
@@ -84,8 +85,20 @@ export default function SourcePage() {
     <div className="page-wrapper">
       <div className="container">
         <button className="fixed-back-button" onClick={handleBack} title="Back to Home">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.5 15L7.5 10L12.5 5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
 
@@ -93,20 +106,18 @@ export default function SourcePage() {
           <div className="source-header">
             <div className="source-header-left">
               <h2>{source.name}</h2>
-              <p className="source-lesson-count">{source.lessons.length} {source.lessons.length === 1 ? 'lesson' : 'lessons'}</p>
+              <p className="source-lesson-count">
+                {source.lessons.length} {source.lessons.length === 1 ? 'lesson' : 'lessons'}
+              </p>
             </div>
-            {source.source && (
-              <span className="source-attribution-header">{source.source}</span>
-            )}
+            {source.source && <span className="source-attribution-header">{source.source}</span>}
           </div>
+
+          <ProgressBar source={source} />
 
           <nav className="lessons-nav">
             {source.lessons.map((lesson, index) => (
-              <LessonCard
-                key={lesson.id}
-                lesson={lesson}
-                index={index + 1}
-              />
+              <LessonCard key={lesson.id} lesson={lesson} index={index + 1} />
             ))}
           </nav>
         </div>

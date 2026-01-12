@@ -1,23 +1,15 @@
-import { CodeExecutionRequest } from '@/types';
-import { EXECUTION_CONFIG, SUPPORTED_LANGUAGES } from './constants';
+import { codeExecutionRequestSchema } from './validation/schemas';
 import { ValidationError } from './utils/errors';
 
-export function validateExecutionRequest(
-  request: CodeExecutionRequest
-): void {
-  if (!request.code || typeof request.code !== 'string') {
-    throw new ValidationError('Code is required and must be a string');
-  }
+/**
+ * Validate code execution request using Zod schema
+ * @deprecated Use codeExecutionRequestSchema.parse() directly
+ */
+export function validateExecutionRequest(request: unknown): void {
+  const result = codeExecutionRequestSchema.safeParse(request);
 
-  if (request.code.length > EXECUTION_CONFIG.MAX_CODE_LENGTH) {
-    throw new ValidationError(
-      `Code exceeds maximum length of ${EXECUTION_CONFIG.MAX_CODE_LENGTH} characters`
-    );
-  }
-
-  if (!request.language || !SUPPORTED_LANGUAGES.includes(request.language)) {
-    throw new ValidationError(
-      `Language must be one of: ${SUPPORTED_LANGUAGES.join(', ')}`
-    );
+  if (!result.success) {
+    const errors = result.error.errors.map(e => e.message).join(', ');
+    throw new ValidationError(`Validation error: ${errors}`);
   }
 }

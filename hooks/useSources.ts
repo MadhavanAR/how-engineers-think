@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Source } from '@/types';
+import { getAllSources, preloadData } from '@/lib/services/frontend-data';
 
 interface UseSourcesReturn {
   sources: Source[];
@@ -17,13 +18,9 @@ export function useSources(): UseSourcesReturn {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('/api/sources');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch sources');
-      }
-      
-      const data = await response.json();
+
+      // Use frontend data service instead of API
+      const data = await getAllSources();
       setSources(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
@@ -34,6 +31,8 @@ export function useSources(): UseSourcesReturn {
   };
 
   useEffect(() => {
+    // Preload data on mount
+    preloadData();
     fetchSources();
   }, []);
 
