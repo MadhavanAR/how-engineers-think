@@ -49,7 +49,8 @@ export default function SourcePage() {
   }, [sourceId]);
 
   const handleBack = () => {
-    router.back();
+    // Always go to home page to avoid navigation loops
+    router.push('/');
   };
 
   if (loading) {
