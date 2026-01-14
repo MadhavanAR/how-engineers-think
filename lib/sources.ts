@@ -133,7 +133,7 @@ export async function getLessonsBySourceId(sourceId: string): Promise<Lesson[]> 
  */
 function getDefaultSource(): Source {
   return {
-    id: 'pragmatic-programmer',
+    id: 'Pragmatic-programmer',
     name: 'Pragmatic Programmer',
     source: 'Book: The Pragmatic Programmer',
     lessons: getHardcodedLessons(),
@@ -146,8 +146,8 @@ function getDefaultSource(): Source {
 function getHardcodedLessons(): Lesson[] {
   return [
     {
-      id: 'pragmatic-programmer-taking-responsibility',
-      sourceId: 'pragmatic-programmer',
+      id: 'Pragmatic-programmer-taking-responsibility',
+      sourceId: 'Pragmatic-programmer',
       title: 'Taking Responsibility',
       subtitle: 'The Cat Ate My Source Code',
       description:

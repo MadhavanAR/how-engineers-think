@@ -207,7 +207,10 @@ async function generateLessonsJson() {
     for (const entry of entries) {
       if (entry.isDirectory() && !entry.name.startsWith('.')) {
         const sourceDir = path.join(sourcesDir, entry.name);
-        const source = await loadSource(sourceDir, entry.name);
+        // Preserve first letter capitalization, lowercase the rest
+        const sourceId =
+          entry.name.charAt(0) + entry.name.slice(1).toLowerCase().replace(/\s+/g, '-');
+        const source = await loadSource(sourceDir, sourceId);
         if (source) {
           sources.push(source);
         }

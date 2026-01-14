@@ -1,12 +1,12 @@
 {
   "sources": [
     {
-      "id": "pragmatic-programmer",
-      "name": "pragmatic-programmer",
+      "id": "Pragmatic-programmer",
+      "name": "Pragmatic-programmer",
       "lessons": [
         {
-          "id": "pragmatic-programmer-01-taking-responsibility",
-          "sourceId": "pragmatic-programmer",
+          "id": "Pragmatic-programmer-01-taking-responsibility",
+          "sourceId": "Pragmatic-programmer",
           "title": "Taking Responsibility",
           "subtitle": "The Cat Ate My Source Code",
           "description": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem.",
@@ -39,8 +39,8 @@
           ]
         },
         {
-          "id": "pragmatic-programmer-02-software-entropy",
-          "sourceId": "pragmatic-programmer",
+          "id": "Pragmatic-programmer-02-software-entropy",
+          "sourceId": "Pragmatic-programmer",
           "title": "Software Entropy",
           "subtitle": "Broken Windows",
           "description": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen.",
@@ -73,8 +73,8 @@
           ]
         },
         {
-          "id": "pragmatic-programmer-03-stone-soup-and-boiled-frogs",
-          "sourceId": "pragmatic-programmer",
+          "id": "Pragmatic-programmer-03-stone-soup-and-boiled-frogs",
+          "sourceId": "Pragmatic-programmer",
           "title": "Stone Soup and Boiled Frogs",
           "subtitle": "Watching slow problems before they become big failures",
           "description": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem.",
@@ -107,8 +107,8 @@
           ]
         },
         {
-          "id": "pragmatic-programmer-04-good-enough-software",
-          "sourceId": "pragmatic-programmer",
+          "id": "Pragmatic-programmer-04-good-enough-software",
+          "sourceId": "Pragmatic-programmer",
           "title": "Good-Enough Software",
           "subtitle": "Knowing when to stop polishing",
           "description": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone.",
@@ -141,8 +141,8 @@
           ]
         },
         {
-          "id": "pragmatic-programmer-05-your-knowledge-portfolio",
-          "sourceId": "pragmatic-programmer",
+          "id": "Pragmatic-programmer-05-your-knowledge-portfolio",
+          "sourceId": "Pragmatic-programmer",
           "title": "Your Knowledge Portfolio",
           "subtitle": "Invest in Your Skills",
           "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
@@ -180,8 +180,8 @@
   ],
   "lessons": [
     {
-      "id": "pragmatic-programmer-01-taking-responsibility",
-      "sourceId": "pragmatic-programmer",
+      "id": "Pragmatic-programmer-01-taking-responsibility",
+      "sourceId": "Pragmatic-programmer",
       "title": "Taking Responsibility",
       "subtitle": "The Cat Ate My Source Code",
       "description": "Imagine you're copying all your photos from your old phone to your new phone. Before you start, you should make sure you have a backup (like saving them to Google Photos first). If you skip this step and lose all your photos, you can't just say \"the phone broke\" or \"I didn't have time to backup.\" A good engineer would say: \"I should have backed up first. Let me check if we can recover the photos from the cloud or if there's another way to get them back.\" See the difference? One person makes excuses, the other person fixes the problem.",
@@ -214,8 +214,8 @@
       ]
     },
     {
-      "id": "pragmatic-programmer-02-software-entropy",
-      "sourceId": "pragmatic-programmer",
+      "id": "Pragmatic-programmer-02-software-entropy",
+      "sourceId": "Pragmatic-programmer",
       "title": "Software Entropy",
       "subtitle": "Broken Windows",
       "description": "You have some old code that you're not using anymore, but every time you run your program, it shows a warning message. It's annoying but not breaking anything, so you ignore it. A week later, you have 50 warning messages. Now when something actually breaks, you can't tell which warnings matter and which ones are just noise. Your code feels messy and broken, even though it still works. This is how one small ignored problem turns into a huge mess. The fix? Deal with that first warning immediately. Even if you can't fix it properly, at least make it stop showing up so you can see real problems when they happen.",
@@ -248,8 +248,8 @@
       ]
     },
     {
-      "id": "pragmatic-programmer-03-stone-soup-and-boiled-frogs",
-      "sourceId": "pragmatic-programmer",
+      "id": "Pragmatic-programmer-03-stone-soup-and-boiled-frogs",
+      "sourceId": "Pragmatic-programmer",
       "title": "Stone Soup and Boiled Frogs",
       "subtitle": "Watching slow problems before they become big failures",
       "description": "Imagine you're building a website, and every time you make a change, the computer checks if everything still works. At first, this check takes 5 minutes - totally fine, you can grab a snack. But then someone adds a few more checks. Then someone else adds a few more. Each addition only adds a few seconds, so nobody thinks it's a big deal. But after a few months, that 5-minute check has become 45 minutes! Now you can't make changes quickly anymore, and everyone is frustrated. This is how small, harmless changes add up to a big problem. The fix? Regularly check how long things take, and if something is getting slower, fix it before it becomes a huge problem.",
@@ -282,8 +282,8 @@
       ]
     },
     {
-      "id": "pragmatic-programmer-04-good-enough-software",
-      "sourceId": "pragmatic-programmer",
+      "id": "Pragmatic-programmer-04-good-enough-software",
+      "sourceId": "Pragmatic-programmer",
       "title": "Good-Enough Software",
       "subtitle": "Knowing when to stop polishing",
       "description": "Imagine you're building a dashboard for a marketing team. They need to see sales data from the last 30 days. You build it, test it, and it works perfectly. The data is correct, the charts show up, everything functions as expected. But instead of showing it to them, you spend the next three weeks adding fancy animations, building a theme system, and making sure it works perfectly on every possible browser. By the time you're done, the marketing campaign is over and they don't need the dashboard anymore. This is what happens when you keep polishing instead of shipping. The dashboard was already \"good enough\" - it did exactly what they needed. The extra work didn't help anyone.",
@@ -316,8 +316,8 @@
       ]
     },
     {
-      "id": "pragmatic-programmer-05-your-knowledge-portfolio",
-      "sourceId": "pragmatic-programmer",
+      "id": "Pragmatic-programmer-05-your-knowledge-portfolio",
+      "sourceId": "Pragmatic-programmer",
       "title": "Your Knowledge Portfolio",
       "subtitle": "Invest in Your Skills",
       "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
@@ -351,6 +351,6 @@
       ]
     }
   ],
-  "generatedAt": "2026-01-14T14:53:57.915Z",
+  "generatedAt": "2026-01-14T15:06:57.251Z",
   "version": "1.0.0"
 }

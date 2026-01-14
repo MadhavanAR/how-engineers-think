@@ -230,7 +230,9 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
     // Load each source
     for (const sourceDirName of sourceDirs) {
       const sourceDir = join(sourcesDir, sourceDirName);
-      const sourceId = sourceDirName.toLowerCase().replace(/\s+/g, '-');
+      // Preserve first letter capitalization, lowercase the rest
+      const sourceId =
+        sourceDirName.charAt(0) + sourceDirName.slice(1).toLowerCase().replace(/\s+/g, '-');
 
       // Try to read source metadata (optional)
       let source: string | undefined;

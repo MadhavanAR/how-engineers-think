@@ -92,10 +92,10 @@ export default function Home() {
             <div className="bookmarks-list">
               {bookmarks.map(bookmark => {
                 // Convert lessonId to new URL format: /{sourceId}/{lessonSlug}
-                // Lesson ID format: pragmatic-programmer-01-taking-responsibility
+                // Lesson ID format: Pragmatic-programmer-01-taking-responsibility
                 // Extract sourceId (first two parts) and lessonSlug (rest)
                 const parts = bookmark.lessonId.split('-');
-                const sourceId = parts.slice(0, 2).join('-'); // pragmatic-programmer
+                const sourceId = parts.slice(0, 2).join('-'); // Pragmatic-programmer
                 const lessonSlug = parts.slice(2).join('-'); // 01-taking-responsibility
                 const lessonUrl = `/${sourceId}/${lessonSlug}`;
                 return (

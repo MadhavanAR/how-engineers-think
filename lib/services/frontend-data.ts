@@ -129,7 +129,7 @@ export async function getLessonsBySourceId(sourceId: string): Promise<Lesson[]> 
 function getFallbackSources(): Source[] {
   return [
     {
-      id: 'pragmatic-programmer',
+      id: 'Pragmatic-programmer',
       name: 'Pragmatic Programmer',
       source: 'Book: The Pragmatic Programmer',
       lessons: getFallbackLessons(),
@@ -143,8 +143,8 @@ function getFallbackSources(): Source[] {
 function getFallbackLessons(): Lesson[] {
   return [
     {
-      id: 'pragmatic-programmer-taking-responsibility',
-      sourceId: 'pragmatic-programmer',
+      id: 'Pragmatic-programmer-taking-responsibility',
+      sourceId: 'Pragmatic-programmer',
       title: 'Taking Responsibility',
       subtitle: 'The Cat Ate My Source Code',
       description:
