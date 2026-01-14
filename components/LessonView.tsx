@@ -1,11 +1,13 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Lesson, Source } from '@/types';
 import SingleIDE from './SingleIDE';
 import BookmarkButton from './BookmarkButton';
 import ShareButton from './ShareButton';
 import NextLessonButton from './NextLessonButton';
 import { useSources } from '@/hooks/useSources';
+import { getLessonUrl } from '@/lib/services/frontend-data';
 
 interface LessonViewProps {
   lesson: Lesson;
@@ -14,8 +16,11 @@ interface LessonViewProps {
 
 export default function LessonView({ lesson, onBack }: LessonViewProps) {
   const { sources } = useSources();
-  // Ensure lesson URL is always absolute for sharing
-  const lessonUrl = `/lesson/${lesson.id}`;
+  const [lessonUrl, setLessonUrl] = useState<string>('');
+
+  useEffect(() => {
+    setLessonUrl(getLessonUrl(lesson));
+  }, [lesson]);
 
   return (
     <>

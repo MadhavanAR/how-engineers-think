@@ -90,21 +90,26 @@ export default function Home() {
           <section className="bookmarks-section">
             <h2>⭐ Your Bookmarks</h2>
             <div className="bookmarks-list">
-              {bookmarks.map(bookmark => (
-                <Link
-                  key={bookmark.lessonId}
-                  href={`/lesson/${bookmark.lessonId}`}
-                  className="bookmark-item"
-                >
-                  <span className="bookmark-icon">⭐</span>
-                  <div className="bookmark-content">
-                    <div className="bookmark-title">{bookmark.title}</div>
-                    <div className="bookmark-meta">
-                      {new Date(bookmark.bookmarkedAt).toLocaleDateString()}
+              {bookmarks.map(bookmark => {
+                // Convert lessonId to new URL format: /{sourceId}/{lessonSlug}
+                // Lesson ID format: pragmatic-programmer-01-taking-responsibility
+                // Extract sourceId (first two parts) and lessonSlug (rest)
+                const parts = bookmark.lessonId.split('-');
+                const sourceId = parts.slice(0, 2).join('-'); // pragmatic-programmer
+                const lessonSlug = parts.slice(2).join('-'); // 01-taking-responsibility
+                const lessonUrl = `/${sourceId}/${lessonSlug}`;
+                return (
+                  <Link key={bookmark.lessonId} href={lessonUrl} className="bookmark-item">
+                    <span className="bookmark-icon">⭐</span>
+                    <div className="bookmark-content">
+                      <div className="bookmark-title">{bookmark.title}</div>
+                      <div className="bookmark-meta">
+                        {new Date(bookmark.bookmarkedAt).toLocaleDateString()}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}

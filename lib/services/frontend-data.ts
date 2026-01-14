@@ -220,3 +220,12 @@ export function preloadData(): void {
     console.error('Failed to preload data:', error);
   });
 }
+
+/**
+ * Get lesson URL in the new format: /{sourceId}/{lessonSlug}
+ */
+export function getLessonUrl(lesson: Lesson): string {
+  // Extract lesson slug from lesson ID (remove sourceId prefix)
+  const lessonSlug = lesson.id.replace(`${lesson.sourceId}-`, '');
+  return `/${lesson.sourceId}/${lessonSlug}`;
+}

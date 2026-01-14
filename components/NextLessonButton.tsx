@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { Source, Lesson } from '@/types';
 import Link from 'next/link';
+import { getLessonUrl } from '@/lib/services/frontend-data';
 
 interface NextLessonButtonProps {
   currentLesson: Lesson;
@@ -24,8 +25,10 @@ export default function NextLessonButton({ currentLesson, sources }: NextLessonB
 
   if (!nextLesson) return null;
 
+  const nextLessonUrl = getLessonUrl(nextLesson);
+
   return (
-    <Link href={`/lesson/${nextLesson.id}`} className="next-lesson-button">
+    <Link href={nextLessonUrl} className="next-lesson-button">
       <span className="next-lesson-title">{nextLesson.title}</span>
       <svg
         width="16"

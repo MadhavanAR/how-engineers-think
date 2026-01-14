@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Lesson } from '@/types';
+import { getLessonUrl } from '@/lib/services/frontend-data';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -9,8 +10,10 @@ interface LessonCardProps {
 }
 
 export default function LessonCard({ lesson, index }: LessonCardProps) {
+  const lessonUrl = getLessonUrl(lesson);
+
   return (
-    <Link href={`/lesson/${lesson.id}`} className="lesson-card-link">
+    <Link href={lessonUrl} className="lesson-card-link">
       <div className="lesson-card">
         <span className="lesson-number">{String(index).padStart(2, '0')}</span>
         <div className="lesson-card-content">

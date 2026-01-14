@@ -56,7 +56,9 @@ export async function GET() {
     const items = lessons
       .map(lesson => {
         const source = sources.find(s => s.id === lesson.sourceId);
-        const lessonUrl = `${baseUrl}/lesson/${lesson.id}`;
+        // New URL format: /{sourceId}/{lessonSlug}
+        const lessonSlug = lesson.id.replace(`${lesson.sourceId}-`, '');
+        const lessonUrl = `${baseUrl}/${lesson.sourceId}/${lessonSlug}`;
         const pubDate = new Date(); // You could add a date field to lessons if needed
 
         // Create description from lesson content
