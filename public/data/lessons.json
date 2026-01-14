@@ -148,7 +148,7 @@
           "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
           "concept": {
             "title": "The idea",
-            "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does—it gives you more tools to solve problems."
+            "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does–it gives you more tools to solve problems."
           },
           "scenario": {
             "title": "Real-world scenario",
@@ -323,7 +323,7 @@
       "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
       "concept": {
         "title": "The idea",
-        "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does—it gives you more tools to solve problems."
+        "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does–it gives you more tools to solve problems."
       },
       "scenario": {
         "title": "Real-world scenario",
@@ -351,6 +351,6 @@
       ]
     }
   ],
-  "generatedAt": "2026-01-14T14:28:09.889Z",
+  "generatedAt": "2026-01-14T14:36:45.591Z",
   "version": "1.0.0"
 }

@@ -51,13 +51,29 @@ function sanitizePythonCode(code: string): string {
         }
       }
 
+      // Allow 'with open(...)' pattern as it's safe (context manager handles cleanup)
+      if (pattern.source === 'open\\(') {
+        const hasWithOpen = /with\s+open\(/.test(codeWithoutComments);
+        if (hasWithOpen) {
+          continue; // Allow this pattern
+        }
+      }
+
       throw new SecurityError(`Potentially unsafe code detected: ${pattern.source}`);
     }
   }
 
   // Additional checks for file operations (check in code without comments)
-  if (codeWithoutComments.includes('open(') && !codeWithoutComments.includes('os.path.exists')) {
-    throw new SecurityError('File operations must be preceded by existence checks');
+  // Allow 'with open(...)' pattern as it's safe (context manager handles cleanup)
+  const hasWithOpen = /with\s+open\(/.test(codeWithoutComments);
+  if (
+    codeWithoutComments.includes('open(') &&
+    !hasWithOpen &&
+    !codeWithoutComments.includes('os.path.exists')
+  ) {
+    throw new SecurityError(
+      'File operations must be preceded by existence checks or use "with open(...)" pattern'
+    );
   }
 
   return code;

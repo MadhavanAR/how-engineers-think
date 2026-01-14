@@ -8,7 +8,7 @@ Think of your technical skills like a financial investment portfolio. Your knowl
 
 You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.
 
-Think of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does—it gives you more tools to solve problems.
+Think of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does–it gives you more tools to solve problems.
 
 ## Real-world scenario
 
