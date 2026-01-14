@@ -110,7 +110,6 @@ export default function SourcePage() {
                 {source.lessons.length} {source.lessons.length === 1 ? 'lesson' : 'lessons'}
               </p>
             </div>
-            {source.source && <span className="source-attribution-header">{source.source}</span>}
           </div>
 
           <nav className="lessons-nav">
