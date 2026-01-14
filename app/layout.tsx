@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ErrorBoundary>
           <DataInitializer />
           <a href="#main-content" className="skip-link">
