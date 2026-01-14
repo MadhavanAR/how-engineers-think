@@ -41,10 +41,6 @@ The system automatically:
 - **JSON** - Static data (no backend!)
 - **Automated** - Build scripts handle everything
 
-## Architecture
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for technical details.
-
 ## License
 
 CC BY-NC-ND 4.0
