@@ -139,6 +139,41 @@
               "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
             }
           ]
+        },
+        {
+          "id": "pragmatic-programmer-05-your-knowledge-portfolio",
+          "sourceId": "pragmatic-programmer",
+          "title": "Your Knowledge Portfolio",
+          "subtitle": "Invest in Your Skills",
+          "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
+          "concept": {
+            "title": "The idea",
+            "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does—it gives you more tools to solve problems."
+          },
+          "scenario": {
+            "title": "Real-world scenario",
+            "content": "Imagine you've been working as a backend engineer for three years. You're really good at Java and you maintain a large application. You're the expert! But then your company's new CTO announces they're moving to a new system using Go and Kubernetes. You've never learned these because \"Java works fine.\"\n\nIf you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along."
+          },
+          "applications": [
+            "When companies migrate from old systems to new cloud-based ones",
+            "Choosing the right database for a project (SQL vs NoSQL vs in-memory)",
+            "Deciding which programming language to use for different tasks",
+            "Learning new tools that can automate manual work and save time",
+            "When you need to understand both the old system and the new one during a migration"
+          ],
+          "examples": [
+            {
+              "language": "python",
+              "code": "# Your Knowledge Portfolio - Python Example\n# This shows how learning different languages gives you better tools\n\n# Task: Read a log file and print lines containing \"ERROR\"\n# This is a simple task that shows the power of diversifying your knowledge\n\n# Python makes this task very simple and readable\n# If you only knew Java, this same task would take many more lines\n# Learning Python expands your thinking and gives you a better tool for quick tasks\n\nwith open(\"server.log\") as f:\n    # \"with open\" automatically handles closing the file\n    # This is like having a smart assistant that cleans up after you\n    \n    for line in f:\n        # Go through each line in the file\n        # Python makes this very simple - no need for complex setup\n        \n        if \"ERROR\" in line:\n            # Check if the line contains \"ERROR\"\n            # Simple and readable!\n            \n            print(line, end='')\n            # Print the line (end='' prevents extra blank lines)\n\n# This is why diversifying your knowledge matters:\n# - Python is great for quick scripts and data processing\n# - Java is great for large, complex applications\n# - Knowing both lets you choose the right tool for each job\n# - Your knowledge portfolio is diversified and valuable!",
+              "executable": true
+            },
+            {
+              "language": "cpp",
+              "code": "#include <iostream>  // For printing to screen\n#include <fstream>   // For reading files\n#include <string>    // For text/strings\n\n// Your Knowledge Portfolio - C++ Example\n// This shows how different languages solve the same problem differently\n\n// Task: Read a log file and print lines containing \"ERROR\"\n// C++ gives you more control but requires more code\n// This is why learning multiple languages is valuable - you can choose the right tool\n\nint main() {\n    // Open the file\n    std::ifstream file(\"server.log\");\n    \n    // Check if the file opened successfully\n    if (!file.is_open()) {\n        std::cerr << \"Could not open server.log\" << std::endl;\n        return 1;  // Exit with error code\n    }\n    \n    std::string line;\n    // Read the file line by line\n    while (std::getline(file, line)) {\n        // Check if this line contains \"ERROR\"\n        if (line.find(\"ERROR\") != std::string::npos) {\n            // Print the line\n            std::cout << line << std::endl;\n        }\n    }\n    \n    // File is automatically closed when it goes out of scope\n    // (C++ handles cleanup automatically)\n    \n    return 0;  // Success!\n}\n\n// Why this matters for your knowledge portfolio:\n// - C++ gives you fine control and high performance\n// - Python is simpler for quick tasks\n// - Java is good for large enterprise applications\n// - Learning all three makes you valuable because you can choose the right tool\n// - Your knowledge doesn't expire because you keep learning new things!",
+              "executable": true,
+              "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+            }
+          ]
         }
       ]
     }
@@ -279,8 +314,43 @@
           "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
         }
       ]
+    },
+    {
+      "id": "pragmatic-programmer-05-your-knowledge-portfolio",
+      "sourceId": "pragmatic-programmer",
+      "title": "Your Knowledge Portfolio",
+      "subtitle": "Invest in Your Skills",
+      "description": "If you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along.",
+      "concept": {
+        "title": "The idea",
+        "content": "You know how people invest money in different stocks and bonds to protect their savings? Good engineers do the same with their knowledge. They don't just learn one programming language and stop. They keep learning new things regularly, even if they don't need them right away. This way, when their company needs to use new technology, they're already prepared instead of panicking.\n\nThink of it like this: if you only know how to use a hammer, every problem looks like a nail. But if you know about screwdrivers, wrenches, and drills too, you can choose the right tool for each job. That's what diversifying your knowledge does—it gives you more tools to solve problems."
+      },
+      "scenario": {
+        "title": "Real-world scenario",
+        "content": "Imagine you've been working as a backend engineer for three years. You're really good at Java and you maintain a large application. You're the expert! But then your company's new CTO announces they're moving to a new system using Go and Kubernetes. You've never learned these because \"Java works fine.\"\n\nIf you're like the immature engineer, you panic. You resist the change, saying \"Why fix what isn't broken?\" You hold onto your old knowledge until it becomes less valuable. But if you're like the pragmatic engineer, you've already been learning new things on the side. You're ready because you've been investing in your knowledge portfolio all along."
+      },
+      "applications": [
+        "When companies migrate from old systems to new cloud-based ones",
+        "Choosing the right database for a project (SQL vs NoSQL vs in-memory)",
+        "Deciding which programming language to use for different tasks",
+        "Learning new tools that can automate manual work and save time",
+        "When you need to understand both the old system and the new one during a migration"
+      ],
+      "examples": [
+        {
+          "language": "python",
+          "code": "# Your Knowledge Portfolio - Python Example\n# This shows how learning different languages gives you better tools\n\n# Task: Read a log file and print lines containing \"ERROR\"\n# This is a simple task that shows the power of diversifying your knowledge\n\n# Python makes this task very simple and readable\n# If you only knew Java, this same task would take many more lines\n# Learning Python expands your thinking and gives you a better tool for quick tasks\n\nwith open(\"server.log\") as f:\n    # \"with open\" automatically handles closing the file\n    # This is like having a smart assistant that cleans up after you\n    \n    for line in f:\n        # Go through each line in the file\n        # Python makes this very simple - no need for complex setup\n        \n        if \"ERROR\" in line:\n            # Check if the line contains \"ERROR\"\n            # Simple and readable!\n            \n            print(line, end='')\n            # Print the line (end='' prevents extra blank lines)\n\n# This is why diversifying your knowledge matters:\n# - Python is great for quick scripts and data processing\n# - Java is great for large, complex applications\n# - Knowing both lets you choose the right tool for each job\n# - Your knowledge portfolio is diversified and valuable!",
+          "executable": true
+        },
+        {
+          "language": "cpp",
+          "code": "#include <iostream>  // For printing to screen\n#include <fstream>   // For reading files\n#include <string>    // For text/strings\n\n// Your Knowledge Portfolio - C++ Example\n// This shows how different languages solve the same problem differently\n\n// Task: Read a log file and print lines containing \"ERROR\"\n// C++ gives you more control but requires more code\n// This is why learning multiple languages is valuable - you can choose the right tool\n\nint main() {\n    // Open the file\n    std::ifstream file(\"server.log\");\n    \n    // Check if the file opened successfully\n    if (!file.is_open()) {\n        std::cerr << \"Could not open server.log\" << std::endl;\n        return 1;  // Exit with error code\n    }\n    \n    std::string line;\n    // Read the file line by line\n    while (std::getline(file, line)) {\n        // Check if this line contains \"ERROR\"\n        if (line.find(\"ERROR\") != std::string::npos) {\n            // Print the line\n            std::cout << line << std::endl;\n        }\n    }\n    \n    // File is automatically closed when it goes out of scope\n    // (C++ handles cleanup automatically)\n    \n    return 0;  // Success!\n}\n\n// Why this matters for your knowledge portfolio:\n// - C++ gives you fine control and high performance\n// - Python is simpler for quick tasks\n// - Java is good for large enterprise applications\n// - Learning all three makes you valuable because you can choose the right tool\n// - Your knowledge doesn't expire because you keep learning new things!",
+          "executable": true,
+          "compileNote": "g++ -std=c++17 example.cpp -o example\n./example"
+        }
+      ]
     }
   ],
-  "generatedAt": "2026-01-14T14:18:57.977Z",
+  "generatedAt": "2026-01-14T14:24:31.734Z",
   "version": "1.0.0"
 }
