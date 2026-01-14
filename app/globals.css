@@ -319,26 +319,10 @@ header h1 {
   overflow: hidden;
 }
 
-.source-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--accent);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-
 .source-card:hover {
   border-color: var(--accent);
   box-shadow: 0 8px 24px var(--shadow-lg);
   transform: translateY(-2px);
-}
-
-.source-card:hover::before {
-  transform: scaleY(1);
 }
 
 .source-card-content {
@@ -478,26 +462,10 @@ header h1 {
   overflow: hidden;
 }
 
-.lesson-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--accent);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-
 .lesson-card:hover {
   border-color: var(--accent);
   box-shadow: 0 8px 24px var(--shadow-lg);
   transform: translateY(-2px);
-}
-
-.lesson-card:hover::before {
-  transform: scaleY(1);
 }
 
 .lesson-number {
@@ -509,11 +477,6 @@ header h1 {
   padding: 0.5rem;
   background: rgba(96, 165, 250, 0.1);
   border-radius: 8px;
-}
-
-.lesson-card.completed .lesson-number {
-  color: var(--success);
-  background: rgba(16, 185, 129, 0.1);
 }
 
 .lesson-card h3 {
@@ -1675,172 +1638,7 @@ header h1 {
    ENGAGEMENT FEATURES STYLES
    ============================================ */
 
-/* Dark Mode Support */
-:root {
-  --dark-bg: #1a1a1a;
-  --dark-surface: #2d2d2d;
-  --dark-text: #e0e0e0;
-  --dark-border: #404040;
-  --dark-accent: #3b82f6;
-}
-
-.dark-mode {
-  --bg: var(--dark-bg);
-  --surface: var(--dark-surface);
-  --text: var(--dark-text);
-  --text-light: #b0b0b0;
-  --text-lighter: #808080;
-  --border: var(--dark-border);
-  --accent: var(--dark-accent);
-  --code-bg: #252525;
-  --code-border: #404040;
-}
-
-/* Progress Bar */
-.progress-bar-container {
-  margin: 2rem 0;
-  padding: 1.75rem;
-  background: linear-gradient(135deg, var(--surface) 0%, rgba(96, 165, 250, 0.02) 100%);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.progress-bar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.25rem;
-  gap: 1rem;
-}
-
-.progress-header-left {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.875rem;
-  flex: 1;
-}
-
-.progress-icon {
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 0.125rem;
-}
-
-.progress-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text);
-  margin: 0 0 0.25rem 0;
-  letter-spacing: -0.01em;
-}
-
-.progress-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin: 0;
-}
-
-.progress-complete {
-  color: var(--success);
-  font-weight: 500;
-}
-
-.progress-percentage-badge {
-  display: flex;
-  align-items: baseline;
-  gap: 0.125rem;
-  background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
-  padding: 0.625rem 1rem;
-  border-radius: 8px;
-  border: 1px solid rgba(96, 165, 250, 0.2);
-  flex-shrink: 0;
-}
-
-.progress-percentage-value {
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.progress-percentage-symbol {
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--accent);
-  opacity: 0.8;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  background: var(--code-bg);
-  border-radius: 6px;
-  overflow: hidden;
-  position: relative;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-  border-radius: 6px;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 0.5rem;
-}
-
-.progress-bar-fill.complete {
-  background: linear-gradient(90deg, var(--success) 0%, rgba(16, 185, 129, 0.9) 100%);
-}
-
-.progress-checkmark {
-  color: white;
-  animation: checkmarkSlide 0.5s ease 0.3s both;
-}
-
-@keyframes checkmarkSlide {
-  from {
-    opacity: 0;
-    transform: translateX(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Progress Stats Panel */
-.progress-stats-panel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background: var(--surface);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 0.25rem;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+/* IDE Theme Styles (for code editor only) */
 
 /* Bookmark Button */
 .bookmark-button {
@@ -1923,28 +1721,6 @@ header h1 {
 }
 
 /* Theme Toggle */
-.theme-toggle-button {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-}
-
-.theme-toggle-button:hover {
-  background: var(--code-bg);
-}
-
-.theme-icon {
-  font-size: 1.2rem;
-  line-height: 1;
-}
 
 /* Lesson Actions */
 .lesson-actions {
@@ -2165,16 +1941,6 @@ header h1 {
 
 /* Responsive Design for New Features */
 @media (max-width: 768px) {
-  .progress-stats-panel {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .stat-value {
-    font-size: 1.5rem;
-  }
-
   .lesson-header-top {
     flex-direction: column;
   }
@@ -2203,16 +1969,11 @@ header h1 {
 }
 
 @media (max-width: 480px) {
-  .progress-stats-panel {
-    grid-template-columns: 1fr;
-  }
-
   .header-actions {
     flex-direction: column;
     width: 100%;
   }
 
-  .theme-toggle-button,
   .github-link,
   .rss-link {
     width: 100%;
@@ -2583,39 +2344,6 @@ header h1 {
 .next-lesson-button svg {
   flex-shrink: 0;
   color: inherit;
-}
-
-/* Lesson Card Completed State */
-.lesson-card.completed {
-  border-left: 4px solid var(--success);
-  background: linear-gradient(to right, rgba(16, 185, 129, 0.05), var(--surface));
-}
-
-.lesson-card.completed:hover {
-  border-color: var(--success);
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
-  transform: translateY(-2px);
-}
-
-.lesson-card.completed:hover::before {
-  background: var(--success);
-  transform: scaleY(1);
-}
-
-.lesson-completed-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--success);
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 700;
 }
 
 .lesson-card {

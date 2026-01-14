@@ -6,15 +6,13 @@ import { ApiResponse } from '@/lib/utils/api-response';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const source = await getSourceById(params.id);
+    const { id } = await params;
+    const source = await getSourceById(id);
 
     if (!source) {
-      console.log(`Source not found: ${params.id}`);
+      console.log(`Source not found: ${id}`);
       return ApiResponse.notFound('Source not found');
     }
 

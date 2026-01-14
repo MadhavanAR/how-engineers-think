@@ -58,7 +58,13 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      - run: npm run generate
+      - run: npm run validate:data
       - run: npm run build
+      - name: Verify lessons.json exists
+        run: test -f public/data/lessons.json || (echo "❌ lessons.json not generated!" && exit 1)
+      - name: Analyze bundle size
+        run: npm run analyze:bundle
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:

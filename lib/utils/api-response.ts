@@ -21,4 +21,3 @@ export class ApiResponse {
     return this.error(message, 500);
   }
 }
-

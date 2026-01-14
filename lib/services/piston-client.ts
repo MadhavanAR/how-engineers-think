@@ -65,28 +65,24 @@ export class PistonClient {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new CodeExecutionError(
-          `Piston API error: ${response.status} ${response.statusText}`
-        );
+        throw new CodeExecutionError(`Piston API error: ${response.status} ${response.statusText}`);
       }
 
       const data = (await response.json()) as PistonResponse;
       return this.parseResponse(data);
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new CodeExecutionError(
-            `Execution timed out after ${this.timeout}ms`
-          );
+          throw new CodeExecutionError(`Execution timed out after ${this.timeout}ms`);
         }
         if (error instanceof CodeExecutionError) {
           throw error;
         }
         throw new CodeExecutionError(error.message);
       }
-      
+
       throw new CodeExecutionError('Unknown error occurred');
     }
   }
@@ -113,9 +109,7 @@ export class PistonClient {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new CodeExecutionError(
-          `Piston API error: ${response.status} ${response.statusText}`
-        );
+        throw new CodeExecutionError(`Piston API error: ${response.status} ${response.statusText}`);
       }
 
       const data = (await response.json()) as PistonResponse;
@@ -133,19 +127,17 @@ export class PistonClient {
       return { success: true };
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new CodeExecutionError(
-            `Execution timed out after ${this.timeout}ms`
-          );
+          throw new CodeExecutionError(`Execution timed out after ${this.timeout}ms`);
         }
         if (error instanceof CodeExecutionError) {
           throw error;
         }
         throw new CodeExecutionError(error.message);
       }
-      
+
       throw new CodeExecutionError('Unknown error occurred');
     }
   }
@@ -179,9 +171,7 @@ export class PistonClient {
 
     // Check runtime errors
     if (run.code !== 0) {
-      const errorOutput = [run.stderr, run.stdout]
-        .filter(Boolean)
-        .join('\n');
+      const errorOutput = [run.stderr, run.stdout].filter(Boolean).join('\n');
       return {
         success: false,
         output: '',
@@ -197,4 +187,3 @@ export class PistonClient {
     };
   }
 }
-

@@ -16,12 +16,10 @@ export const env = {
  * Validates that all required environment variables are set
  */
 export function validateEnv(): void {
-  const missing = requiredEnvVars.filter((key) => !process.env[key]);
-  
+  const missing = requiredEnvVars.filter(key => !process.env[key]);
+
   if (missing.length > 0) {
-    throw new Error(
-      `Missing required environment variables: ${missing.join(', ')}`
-    );
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
   }
 }
 
@@ -29,4 +27,3 @@ export function validateEnv(): void {
 if (env.isProduction) {
   validateEnv();
 }
-

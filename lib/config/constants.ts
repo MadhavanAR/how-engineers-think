@@ -11,4 +11,3 @@ export const EXECUTION_CONFIG = {
 export const SUPPORTED_LANGUAGES = ['python', 'cpp'] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
-

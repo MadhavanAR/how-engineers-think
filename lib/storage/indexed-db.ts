@@ -12,7 +12,6 @@ const DB_NAME = 'how-engineers-think-db';
 const DB_VERSION = 1;
 
 interface Database {
-  progress: IDBObjectStore;
   bookmarks: IDBObjectStore;
   preferences: IDBObjectStore;
   lessons: IDBObjectStore;
@@ -44,12 +43,6 @@ export async function initDB(): Promise<IDBDatabase> {
       const db = (event.target as IDBOpenDBRequest).result;
 
       // Create object stores if they don't exist
-      if (!db.objectStoreNames.contains('progress')) {
-        const progressStore = db.createObjectStore('progress', { keyPath: 'id' });
-        progressStore.createIndex('lessonId', 'lessonId', { unique: false });
-        progressStore.createIndex('sourceId', 'sourceId', { unique: false });
-      }
-
       if (!db.objectStoreNames.contains('bookmarks')) {
         const bookmarksStore = db.createObjectStore('bookmarks', { keyPath: 'lessonId' });
         bookmarksStore.createIndex('sourceId', 'sourceId', { unique: false });
@@ -204,18 +197,6 @@ export async function migrateFromLocalStorage(): Promise<void> {
     const migrated = localStorage.getItem('indexeddb-migrated');
     if (migrated === 'true') {
       return;
-    }
-
-    // Migrate progress
-    const progressData = localStorage.getItem('how-engineers-think-progress');
-    if (progressData) {
-      try {
-        const progress = JSON.parse(progressData);
-        // Store in IndexedDB (you'll need to adapt this to your schema)
-        await put('progress', { id: 'user-progress', ...progress });
-      } catch (error) {
-        console.error('Failed to migrate progress:', error);
-      }
     }
 
     // Migrate bookmarks

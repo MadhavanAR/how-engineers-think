@@ -18,4 +18,3 @@ Imagine you're building a dashboard for a marketing team. They need to see sales
 - Apps that are delayed because the design needs to be "perfect" (like waiting to post a photo until you've edited it 50 times)
 - Code that's over-engineered for simple problems (like using a rocket ship to deliver pizza)
 - Teams that keep improving something that already works instead of moving to the next important thing (like polishing a car that's already clean)
-

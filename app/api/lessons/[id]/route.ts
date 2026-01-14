@@ -7,12 +7,10 @@ import { NotFoundError } from '@/lib/utils/errors';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const lesson = await getLessonById(params.id);
+    const { id } = await params;
+    const lesson = await getLessonById(id);
 
     if (!lesson) {
       return ApiResponse.notFound('Lesson not found');
@@ -21,7 +19,7 @@ export async function GET(
     return ApiResponse.success(lesson);
   } catch (error) {
     console.error('Error fetching lesson:', error);
-    
+
     if (error instanceof NotFoundError) {
       return ApiResponse.notFound(error.message);
     }

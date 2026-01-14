@@ -3,11 +3,30 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
-    open-pull-requests-limit: 10
+      interval: 'monthly' # Changed from weekly to reduce PR spam
+    open-pull-requests-limit: 5 # Reduced from 10
     reviewers:
       - 'madhavan'
     labels:
       - 'dependencies'
       - 'automated'
+    # Group updates to reduce PR count
+    groups:
+      production-dependencies:
+        patterns:
+          - '@sentry/*'
+          - 'next'
+          - 'react'
+          - 'react-dom'
+          - 'zod'
+      dev-dependencies:
+        patterns:
+          - '@testing-library/*'
+          - '@types/*'
+          - '@vitest/*'
+          - 'eslint*'
+          - 'vitest'
+          - 'prettier*'
+          - 'typescript'
+          - 'lint-staged'
 

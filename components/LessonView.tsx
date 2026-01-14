@@ -1,16 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Lesson, Source } from '@/types';
 import SingleIDE from './SingleIDE';
 import BookmarkButton from './BookmarkButton';
 import ShareButton from './ShareButton';
 import NextLessonButton from './NextLessonButton';
-import LessonCompletionAnimation from './LessonCompletionAnimation';
-import { useProgress } from '@/hooks/useProgress';
 import { useSources } from '@/hooks/useSources';
-import { useToast } from '@/hooks/useToast';
-import ToastContainer from '@/components/ToastContainer';
 
 interface LessonViewProps {
   lesson: Lesson;
@@ -18,39 +13,7 @@ interface LessonViewProps {
 }
 
 export default function LessonView({ lesson, onBack }: LessonViewProps) {
-  const { completeLesson, addTime, checkCompleted } = useProgress();
   const { sources } = useSources();
-  const { showToast, toasts, removeToast } = useToast();
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [startTime] = useState(Date.now());
-  const [showCompletion, setShowCompletion] = useState(false);
-  const [wasCompleted, setWasCompleted] = useState(checkCompleted(lesson.id));
-
-  // Track time spent on lesson
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      setTimeSpent(elapsed);
-      if (elapsed > 0 && elapsed % 30 === 0) {
-        // Update every 30 seconds
-        addTime(lesson.id, 30);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [lesson.id, startTime, addTime]);
-
-  // Mark as completed when user spends enough time
-  useEffect(() => {
-    if (timeSpent >= 60 && !wasCompleted) {
-      // Mark complete after 1 minute of reading
-      completeLesson(lesson.id, lesson.sourceId);
-      setWasCompleted(true);
-      setShowCompletion(true);
-      showToast('Lesson completed! +10 points', 'success');
-    }
-  }, [timeSpent, lesson.id, lesson.sourceId, completeLesson, wasCompleted, showToast]);
-
   const lessonUrl = `/lesson/${lesson.id}`;
 
   return (
@@ -115,9 +78,6 @@ export default function LessonView({ lesson, onBack }: LessonViewProps) {
 
         <NextLessonButton currentLesson={lesson} sources={sources} />
       </div>
-
-      {showCompletion && <LessonCompletionAnimation onComplete={() => setShowCompletion(false)} />}
-      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </>
   );
 }

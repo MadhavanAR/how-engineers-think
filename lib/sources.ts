@@ -22,7 +22,7 @@ let cachedLessons: CacheEntry<Lesson[]> | null = null;
 function isCacheValid<T>(cache: CacheEntry<T> | null): boolean {
   if (!cache) return false;
   const now = Date.now();
-  return (now - cache.timestamp) < CACHE_TTL;
+  return now - cache.timestamp < CACHE_TTL;
 }
 
 /**
@@ -42,15 +42,15 @@ export async function getAllSources(): Promise<Source[]> {
     console.log('Using cached sources');
     return cachedSources!.data;
   }
-  
+
   console.log('Loading sources from files...');
   console.log(`Current working directory: ${process.cwd()}`);
   console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-  
+
   try {
     const fileSources = await loadSourcesFromFiles();
     console.log(`Loaded ${fileSources.length} source(s) from files`);
-    
+
     if (fileSources.length > 0) {
       fileSources.forEach(source => {
         console.log(`  - ${source.name}: ${source.lessons.length} lesson(s)`);
@@ -58,21 +58,21 @@ export async function getAllSources(): Promise<Source[]> {
           console.log(`    ${index + 1}. ${lesson.title} (ID: ${lesson.id})`);
         });
       });
-      
+
       cachedSources = {
         data: fileSources,
         timestamp: Date.now(),
       };
       return fileSources;
     }
-    
+
     console.error('⚠️ WARNING: No sources found in files! This should not happen in production.');
     console.error('Falling back to default source with hardcoded lessons.');
     console.error('Please check:');
     console.error('  1. Is the sources/ directory committed to git?');
     console.error('  2. Is the sources/ directory included in the deployment?');
     console.error('  3. Check production logs for path resolution errors');
-    
+
     // Fallback to default source with hardcoded lessons
     return [getDefaultSource()];
   } catch (error) {
@@ -90,7 +90,7 @@ export async function getAllLessons(): Promise<Lesson[]> {
   // Always reload from files (cache disabled)
   const fileLessons = await loadAllLessonsFromFiles();
   console.log(`Loaded ${fileLessons.length} lesson(s) from files`);
-  
+
   if (fileLessons.length > 0) {
     // Update cache but it won't be used since TTL is 0
     cachedLessons = {
@@ -99,7 +99,7 @@ export async function getAllLessons(): Promise<Lesson[]> {
     };
     return fileLessons;
   }
-  
+
   // Fallback to hardcoded lessons
   return getHardcodedLessons();
 }
@@ -109,7 +109,7 @@ export async function getAllLessons(): Promise<Lesson[]> {
  */
 export async function getLessonById(id: string): Promise<Lesson | undefined> {
   const lessons = await getAllLessons();
-  return lessons.find((lesson) => lesson.id === id);
+  return lessons.find(lesson => lesson.id === id);
 }
 
 /**
@@ -117,7 +117,7 @@ export async function getLessonById(id: string): Promise<Lesson | undefined> {
  */
 export async function getSourceById(id: string): Promise<Source | undefined> {
   const sources = await getAllSources();
-  return sources.find((source) => source.id === id);
+  return sources.find(source => source.id === id);
 }
 
 /**
@@ -151,7 +151,7 @@ function getHardcodedLessons(): Lesson[] {
       title: 'Taking Responsibility',
       subtitle: 'The Cat Ate My Source Code',
       description:
-        'When things break, don\'t make excuses. Take responsibility, explain what happened, and help fix it.',
+        "When things break, don't make excuses. Take responsibility, explain what happened, and help fix it.",
       concept: {
         title: 'The idea',
         content:

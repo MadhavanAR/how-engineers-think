@@ -24,25 +24,23 @@ function parseReadme(content: string): LessonMetadata {
   // Extract title (first # heading)
   const titleMatch = content.match(/^#\s+(.+)$/m);
   const title = titleMatch ? titleMatch[1].trim() : 'Untitled Lesson';
-  
+
   // Extract subtitle (first ## heading after title)
   const subtitleMatch = content.match(/^#\s+.+\n\n##\s+(.+)$/m);
   const subtitle = subtitleMatch ? subtitleMatch[1].trim() : '';
-  
+
   // Extract description (first paragraph after title/subtitle, before first ##)
   const descriptionMatch = content.match(/^#\s+.+\n\n(?:##\s+.+\n\n)?(.+?)(?=\n##)/s);
-  const description = descriptionMatch 
-    ? descriptionMatch[1].trim().split('\n\n')[0].trim()
-    : '';
-  
+  const description = descriptionMatch ? descriptionMatch[1].trim().split('\n\n')[0].trim() : '';
+
   // Extract "The idea" section
   const ideaMatch = content.match(/##\s+[Tt]he idea\s*\n\n(.+?)(?=\n##|\n###|$)/s);
   const ideaContent = ideaMatch ? ideaMatch[1].trim() : '';
-  
+
   // Extract "Real-world scenario" section
   const scenarioMatch = content.match(/##\s+[Rr]eal-world scenario\s*\n\n(.+?)(?=\n##|\n###|$)/s);
   const scenarioContent = scenarioMatch ? scenarioMatch[1].trim() : '';
-  
+
   // Extract applications
   const applicationsMatch = content.match(/##\s+Where.*?\n\n(.+?)(?=\n##|\n###|$)/s);
   const applicationsText = applicationsMatch ? applicationsMatch[1] : '';
@@ -54,7 +52,7 @@ function parseReadme(content: string): LessonMetadata {
     })
     .map(line => line.replace(/^[-*•]\s+/, '').trim())
     .filter(Boolean);
-  
+
   return {
     title,
     subtitle,
@@ -67,11 +65,10 @@ function parseReadme(content: string): LessonMetadata {
       title: 'Real-world scenario',
       content: scenarioContent || 'No scenario provided.',
     },
-    applications: applications.length > 0 ? applications : [
-      'Real-world software development',
-      'Team collaboration',
-      'Code quality practices',
-    ],
+    applications:
+      applications.length > 0
+        ? applications
+        : ['Real-world software development', 'Team collaboration', 'Code quality practices'],
   };
 }
 
@@ -90,23 +87,27 @@ async function readCodeFile(filePath: string): Promise<string | null> {
 /**
  * Load a single lesson from directory
  */
-async function loadLesson(lessonDir: string, lessonId: string, sourceId: string): Promise<Lesson | null> {
+async function loadLesson(
+  lessonDir: string,
+  lessonId: string,
+  sourceId: string
+): Promise<Lesson | null> {
   try {
     const readmePath = join(lessonDir, 'README.md');
     let readmeContent: string;
-    
+
     try {
       readmeContent = await fs.readFile(readmePath, 'utf-8');
     } catch (error) {
       console.warn(`No README.md found in ${lessonDir}:`, error);
       return null;
     }
-    
+
     const metadata = parseReadme(readmeContent);
-    
+
     // Read code examples
     const examples: CodeExample[] = [];
-    
+
     const pythonPath = join(lessonDir, 'python', 'example.py');
     const pythonCode = await readCodeFile(pythonPath);
     if (pythonCode) {
@@ -118,7 +119,7 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
     } else {
       console.warn(`Python example not found or empty: ${pythonPath}`);
     }
-    
+
     const cppPath = join(lessonDir, 'cpp', 'example.cpp');
     const cppCode = await readCodeFile(cppPath);
     if (cppCode) {
@@ -131,14 +132,16 @@ async function loadLesson(lessonDir: string, lessonId: string, sourceId: string)
     } else {
       console.warn(`C++ example not found or empty: ${cppPath}`);
     }
-    
+
     if (examples.length === 0) {
-      console.error(`No code examples found in ${lessonDir}. Python: ${pythonPath}, C++: ${cppPath}`);
+      console.error(
+        `No code examples found in ${lessonDir}. Python: ${pythonPath}, C++: ${cppPath}`
+      );
       return null;
     }
-    
+
     console.log(`Successfully loaded lesson: ${lessonId} with ${examples.length} example(s)`);
-    
+
     return {
       id: lessonId,
       sourceId,
@@ -159,16 +162,16 @@ async function findSourcesDir(): Promise<string | null> {
   // In production (serverless), process.cwd() might be different
   // Try multiple paths to find the sources directory
   const possiblePaths = [
-    join(process.cwd(), 'sources'),           // Standard location
-    join(process.cwd(), '..', 'sources'),     // If running from .next/server
-    join(process.cwd(), '../..', 'sources'),  // If running from .next/server/app
-    join(__dirname, '..', 'sources'),         // Relative to compiled file
-    join(__dirname, '..', '..', 'sources'),  // Alternative relative path
+    join(process.cwd(), 'sources'), // Standard location
+    join(process.cwd(), '..', 'sources'), // If running from .next/server
+    join(process.cwd(), '../..', 'sources'), // If running from .next/server/app
+    join(__dirname, '..', 'sources'), // Relative to compiled file
+    join(__dirname, '..', '..', 'sources'), // Alternative relative path
   ];
-  
+
   console.log(`Looking for sources directory. Current working directory: ${process.cwd()}`);
   console.log(`__dirname: ${__dirname}`);
-  
+
   for (const path of possiblePaths) {
     try {
       await fs.access(path);
@@ -182,7 +185,7 @@ async function findSourcesDir(): Promise<string | null> {
       console.log(`✗ Path not accessible: ${path}`);
     }
   }
-  
+
   console.error(`❌ Sources directory not found. Tried paths:`, possiblePaths);
   console.error(`Current working directory: ${process.cwd()}`);
   return null;
@@ -192,7 +195,7 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
   try {
     // Find the sources directory (handles different deployment environments)
     const sourcesDir = await findSourcesDir();
-    
+
     if (!sourcesDir) {
       console.error(`❌ CRITICAL: Could not find sources directory!`);
       console.error(`Current working directory: ${process.cwd()}`);
@@ -202,10 +205,10 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
       console.error(`Please ensure sources/ is committed to git and included in deployment.`);
       return [];
     }
-    
+
     console.log(`✓ Found sources directory: ${sourcesDir}`);
     console.log(`Loading sources from: ${sourcesDir}`);
-    
+
     // Verify the directory is readable
     try {
       const entries = await fs.readdir(sourcesDir, { withFileTypes: true });
@@ -214,21 +217,21 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
       console.error(`❌ Cannot read sources directory:`, error);
       return [];
     }
-    
+
     // Read all source directories
     const entries = await fs.readdir(sourcesDir, { withFileTypes: true });
     const sourceDirs = entries
       .filter(entry => entry.isDirectory())
       .map(entry => entry.name)
       .sort();
-    
+
     const sources: Source[] = [];
-    
+
     // Load each source
     for (const sourceDirName of sourceDirs) {
       const sourceDir = join(sourcesDir, sourceDirName);
       const sourceId = sourceDirName.toLowerCase().replace(/\s+/g, '-');
-      
+
       // Try to read source metadata (optional)
       let source: string | undefined;
       try {
@@ -241,21 +244,21 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
       } catch {
         // No metadata file, that's okay
       }
-      
+
       // Read lesson directories within this source
       const lessonEntries = await fs.readdir(sourceDir, { withFileTypes: true });
       const lessonDirs = lessonEntries
         .filter(entry => entry.isDirectory())
         .map(entry => entry.name)
         .sort();
-      
+
       const lessons: Lesson[] = [];
-      
+
       // Load each lesson in this source
       for (const lessonDirName of lessonDirs) {
         const lessonDir = join(sourceDir, lessonDirName);
         const lessonId = `${sourceId}-${lessonDirName.replace(/^\d+-/, '').toLowerCase()}`;
-        
+
         console.log(`Attempting to load lesson: ${lessonDirName} (ID: ${lessonId})`);
         const lesson = await loadLesson(lessonDir, lessonId, sourceId);
         if (lesson) {
@@ -265,22 +268,27 @@ export async function loadSourcesFromFiles(): Promise<Source[]> {
           console.error(`✗ Failed to load lesson: ${lessonDirName}`);
         }
       }
-      
-      console.log(`Total lessons loaded for ${sourceDirName}: ${lessons.length} out of ${lessonDirs.length} directories`);
-      
+
+      console.log(
+        `Total lessons loaded for ${sourceDirName}: ${lessons.length} out of ${lessonDirs.length} directories`
+      );
+
       if (lessons.length > 0) {
         sources.push({
           id: sourceId,
-          name: sourceDirName.split('-').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-          ).join(' '),
+          name: sourceDirName
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' '),
           source,
           lessons,
         });
       }
     }
-    
-    console.log(`✓ Successfully loaded ${sources.length} source(s) with total ${sources.reduce((sum, s) => sum + s.lessons.length, 0)} lesson(s)`);
+
+    console.log(
+      `✓ Successfully loaded ${sources.length} source(s) with total ${sources.reduce((sum, s) => sum + s.lessons.length, 0)} lesson(s)`
+    );
     return sources;
   } catch (error) {
     console.error('❌ CRITICAL ERROR loading sources from files:', error);

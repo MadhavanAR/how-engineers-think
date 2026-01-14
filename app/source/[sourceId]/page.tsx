@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import LessonCard from '@/components/LessonCard';
 import Footer from '@/components/Footer';
-import ProgressBar from '@/components/ProgressBar';
 import { Source } from '@/types';
 
 export default function SourcePage() {
@@ -112,8 +111,6 @@ export default function SourcePage() {
             </div>
             {source.source && <span className="source-attribution-header">{source.source}</span>}
           </div>
-
-          <ProgressBar source={source} />
 
           <nav className="lessons-nav">
             {source.lessons.map((lesson, index) => (

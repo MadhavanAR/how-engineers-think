@@ -11,7 +11,8 @@ export const runtime = 'nodejs';
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const ip =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     if (!codeExecutionRateLimiter.isAllowed(ip)) {
       const resetTime = codeExecutionRateLimiter.getResetTime(ip);
       return NextResponse.json(
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     if (!validationResult.success) {
       return ApiResponse.badRequest(
-        `Validation error: ${validationResult.error.errors.map(e => e.message).join(', ')}`
+        `Validation error: ${validationResult.error.issues.map(e => e.message).join(', ')}`
       );
     }
 

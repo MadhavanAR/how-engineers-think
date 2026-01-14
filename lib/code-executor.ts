@@ -22,7 +22,7 @@ export class CodeExecutor {
 
       const result = await this.executeByLanguage(sanitizedCode, request.language, action);
       result.executionTime = Date.now() - startTime;
-      
+
       return result;
     } catch (error) {
       return this.handleError(error, Date.now() - startTime);
@@ -50,7 +50,7 @@ export class CodeExecutor {
 
   private async executePython(code: string): Promise<CodeExecutionResponse> {
     const result = await this.pistonClient.execute('python', code);
-    
+
     return {
       success: result.success,
       output: result.success ? this.truncateOutput(result.output) : '',
@@ -60,7 +60,7 @@ export class CodeExecutor {
 
   private async compileCpp(code: string): Promise<CodeExecutionResponse> {
     const result = await this.pistonClient.checkCompilation('cpp', code, ['-std=c++17']);
-    
+
     return {
       success: result.success,
       output: result.success ? 'Compilation successful!' : '',
@@ -71,7 +71,7 @@ export class CodeExecutor {
 
   private async executeCpp(code: string): Promise<CodeExecutionResponse> {
     const result = await this.pistonClient.execute('cpp', code, ['-std=c++17']);
-    
+
     return {
       success: result.success,
       output: result.success ? this.truncateOutput(result.output) : '',
@@ -99,10 +99,7 @@ export class CodeExecutor {
 
   private truncateOutput(output: string): string {
     if (output.length > EXECUTION_CONFIG.MAX_OUTPUT_LENGTH) {
-      return (
-        output.substring(0, EXECUTION_CONFIG.MAX_OUTPUT_LENGTH) +
-        '\n... (output truncated)'
-      );
+      return output.substring(0, EXECUTION_CONFIG.MAX_OUTPUT_LENGTH) + '\n... (output truncated)';
     }
     return output;
   }

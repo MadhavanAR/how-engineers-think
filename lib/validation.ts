@@ -9,7 +9,7 @@ export function validateExecutionRequest(request: unknown): void {
   const result = codeExecutionRequestSchema.safeParse(request);
 
   if (!result.success) {
-    const errors = result.error.errors.map(e => e.message).join(', ');
+    const errors = result.error.issues.map(e => e.message).join(', ');
     throw new ValidationError(`Validation error: ${errors}`);
   }
 }

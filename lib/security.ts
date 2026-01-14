@@ -41,19 +41,17 @@ function sanitizePythonCode(code: string): string {
     if (pattern.test(codeWithoutComments)) {
       // Allow specific safe patterns - if importing os, only allow if using safe methods
       if (pattern.source.includes('import\\s+os')) {
-        const usesSafeOsMethods = 
-          code.includes('os.path.exists') || 
+        const usesSafeOsMethods =
+          code.includes('os.path.exists') ||
           code.includes('os.path.isfile') ||
           code.includes('os.path.isdir');
-        
+
         if (usesSafeOsMethods) {
           continue; // Allow this import
         }
       }
-      
-      throw new SecurityError(
-        `Potentially unsafe code detected: ${pattern.source}`
-      );
+
+      throw new SecurityError(`Potentially unsafe code detected: ${pattern.source}`);
     }
   }
 

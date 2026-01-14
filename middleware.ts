@@ -4,7 +4,8 @@ import { apiRateLimiter } from '@/lib/rate-limiter';
 
 export function middleware(request: NextRequest) {
   // Get client IP
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  const ip =
+    request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
 
   // Apply rate limiting to API routes
   if (request.nextUrl.pathname.startsWith('/api/')) {

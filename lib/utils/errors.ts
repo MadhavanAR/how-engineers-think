@@ -33,4 +33,3 @@ export class SecurityError extends AppError {
     super(message, 400, 'SECURITY_ERROR');
   }
 }
-

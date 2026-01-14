@@ -13,8 +13,8 @@ export default function Footer() {
             className="footer-link"
           >
             Madhavan
-          </a>
-          {' '}- <span className="footer-sarcasm">because someone had to</span>
+          </a>{' '}
+          - <span className="footer-sarcasm">because someone had to</span>
         </p>
         <p className="footer-copyright">
           © {new Date().getFullYear()} MadhavanAR. All rights reserved.
@@ -23,4 +23,3 @@ export default function Footer() {
     </footer>
   );
 }
-

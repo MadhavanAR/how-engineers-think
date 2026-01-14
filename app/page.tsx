@@ -2,8 +2,6 @@
 
 import SourceCard from '@/components/SourceCard';
 import Footer from '@/components/Footer';
-import ProgressStats from '@/components/ProgressStats';
-import ThemeToggle from '@/components/ThemeToggle';
 import { useSources } from '@/hooks/useSources';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import { useToast } from '@/hooks/useToast';
@@ -36,7 +34,6 @@ export default function Home() {
               <p className="subtitle">Where &apos;it works on my machine&apos; meets reality</p>
             </div>
             <div className="header-actions">
-              <ThemeToggle />
               <a
                 href="https://github.com/MadhavanAR/how-engineers-think"
                 target="_blank"
@@ -88,8 +85,6 @@ export default function Home() {
             </div>
           </div>
         </header>
-
-        <ProgressStats />
 
         {bookmarks.length > 0 && (
           <section className="bookmarks-section">

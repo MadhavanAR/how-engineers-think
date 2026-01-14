@@ -1,34 +1,50 @@
 # How Engineers Think
 
-A collection of engineering principles and lessons from companies, senior engineers and books. Each lesson includes working code examples you can run and experiment with directly in your browser.
+Learn engineering principles through interactive code examples. Each lesson includes working Python and C++ code you can run directly in your browser.
 
-## What It Does
+## Quick Start
 
-- Browse lessons about engineering thinking
-- Edit and run Python and C++ code in your browser
-- Learn from real-world examples with interactive code
+```bash
+npm install
+npm run dev
+```
 
-## Getting Started
+Open [http://localhost:3000](http://localhost:3000)
 
-1. Install [Node.js](https://nodejs.org/)
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+## How It Works
+
+**Zero Backend, Pure JSON** - Just like your friend's tech events project!
+
+1. Add lessons in `sources/` folder (markdown + code files)
+2. Build automatically generates `lessons.json`
+3. Frontend loads JSON (one file, cached by browser)
+4. Everything works client-side
+
+**No database, no API, no backend needed.**
 
 ## Contributing
 
-Add a lesson by creating a folder in `sources/` with a `README.md` and optional code files. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Add lessons by creating folders in `sources/`. See [CONTRIBUTING.md](CONTRIBUTING.md) for the simple format.
 
-## Deployment
+The system automatically:
 
-Deploy to [Vercel](https://vercel.com) by connecting your GitHub account and importing this repository. Code execution is handled automatically using Piston API.
+- ✅ Generates JSON from your files
+- ✅ Validates data structure
+- ✅ Type-checks everything
+- ✅ Works immediately after build
+
+## Tech Stack
+
+- **Next.js 14** - React framework
+- **TypeScript** - Type safety
+- **Pyodide** - Python execution in browser
+- **JSON** - Static data (no backend!)
+- **Automated** - Build scripts handle everything
+
+## Architecture
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for technical details.
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License. See [LICENSE](LICENSE) for details.
+CC BY-NC-ND 4.0
