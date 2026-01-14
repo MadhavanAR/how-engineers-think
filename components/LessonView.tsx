@@ -14,6 +14,7 @@ interface LessonViewProps {
 
 export default function LessonView({ lesson, onBack }: LessonViewProps) {
   const { sources } = useSources();
+  // Ensure lesson URL is always absolute for sharing
   const lessonUrl = `/lesson/${lesson.id}`;
 
   return (

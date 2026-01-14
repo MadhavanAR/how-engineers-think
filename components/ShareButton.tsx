@@ -12,7 +12,16 @@ export default function ShareButton({ url, title, description }: ShareButtonProp
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    const fullUrl = typeof window !== 'undefined' ? `${window.location.origin}${url}` : url;
+    // Ensure URL is absolute and works independently
+    let fullUrl = url;
+    if (typeof window !== 'undefined') {
+      // If URL is relative, make it absolute
+      if (url.startsWith('/')) {
+        fullUrl = `${window.location.origin}${url}`;
+      } else if (!url.startsWith('http')) {
+        fullUrl = `${window.location.origin}/${url}`;
+      }
+    }
     const text = description ? `${title}\n\n${description}` : title;
 
     // Try Web Share API first
